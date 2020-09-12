@@ -8,12 +8,14 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "minio": "^7.0.16",
     "mongoose": "^5.10.5"
   },
   "devDependencies": {},
   "scripts": {
     "start": "node app.js",
-    "config": "node config/config.js"
+    "config": "node config/config.js",
+    "create-buckets": "node config/minio.js"
   },
   "author": "",
   "license": "ISC"

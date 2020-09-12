@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var config = require('./config/config');
+var minio = require('./config/minio');
 var db = require('./models/db');
 
 var app = express();
