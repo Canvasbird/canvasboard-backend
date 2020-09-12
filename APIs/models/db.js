@@ -35,6 +35,9 @@ process.on('SIGINT', function () {
 
 const db = {};
 
+db.Users = require('./collections/user');
+db.Boards = require('./collections/boards');
+
 db.mongoose = mongoose;
 
 module.exports = db;
