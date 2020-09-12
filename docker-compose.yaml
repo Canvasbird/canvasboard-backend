@@ -19,8 +19,24 @@ services:
     restart: unless-stopped
 
 
+  # -------------------- MongoDB -------------------- #
 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    env_file:
+      - ./apis/.env
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - docker_net
+    restart: unless-stopped
 
 networks:
   docker_net:
     driver: bridge
+
+volumes:
+  mongodb-data:

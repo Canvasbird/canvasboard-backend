@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var config = require('./config/config');
-
+var db = require('./models/db');
 
 var app = express();
 
