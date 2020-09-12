@@ -2,7 +2,7 @@ require("dotenv").config();
 
 var db = {
 	prod: {
-		DATABASE_HOST_URL: "mongodb://localhost:27017/canvasboard",
+		DATABASE_HOST_URL: "mongodb://mongodb:27017/canvasboard",
 		DATABASE_PORT: parseInt(process.env.DATABASE_PORT),
 	},
 
