@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  # -------------------- CanvasBoard APIs Express Container -------------------- #
+
+  canvasboard-apis:
+    image: "canvasboard-apis"
+    build:
+      context: ./APIs
+      dockerfile: Dockerfile
+    container_name: canvasboard-apis
+    environment:
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    networks:
+      - docker_net
+    restart: unless-stopped
+
+
+
+
+networks:
+  docker_net:
+    driver: bridge
