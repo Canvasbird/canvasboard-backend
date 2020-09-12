@@ -5,6 +5,7 @@ var cors = require('cors');
 var config = require('./config/config');
 var minio = require('./config/minio');
 var db = require('./models/db');
+var router = require('./Routes/index');
 
 var app = express();
 
@@ -17,8 +18,10 @@ app.get("/", function (req, res) {
       success: true,
       message: "Welcome to the Canvasboard APIs"
     });
-  });
+});
 
+
+app.use('/api/v1', router);
 
 
 app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));

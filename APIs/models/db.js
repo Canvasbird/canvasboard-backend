@@ -1,5 +1,7 @@
-var config = require("../config/config");
 const mongoose = require("mongoose");
+
+var config = require("../config/config");
+
 
 mongoose
 	.connect(config.db.DATABASE_HOST_URL, {
