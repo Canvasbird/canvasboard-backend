@@ -1,5 +1,7 @@
 var db = require("../models/db");
 var config = require("../config/config");
+var html2json = require('html2json').html2json;
+var json2html = require('html2json').json2html;
 
 
 function getUserBoards(req, res) {
@@ -66,17 +68,11 @@ function saveUserBoardData(req, res) {
             throw new Error("board_name is required.")
         }
 
-        if(!req.body.board_desc){
-            throw new Error("board_desc is required.")
-        }
-
         if(!req.body.board_data){
             throw new Error("board_data is required.")
         }
 
-        if(!req.body.board_img){
-            throw new Error("board_img is required.")
-        }
+        req.body.board_data = html2json(req.body.board_data);
 
         var new_board = db.Boards({
             user_id: req.token.user_id,
@@ -123,6 +119,16 @@ function saveUserBoardData(req, res) {
 
 }
 
+// data = `<div class="container">
+//   <div class="row justify-content-center">
+//     <div class="buttons">
+//       <button class="btn btn-outline-primary" routerLink="/board"><strong>Launch Board</strong></button>
+//       <button class="btn btn-outline-danger" routerLink="/file-explorer"><strong>File Explorer</strong></button>
+//     </div>
+//   </div>
+// </div>`
+
+// html = json2html(json);
 
 module.exports = {
     getUserBoards,
