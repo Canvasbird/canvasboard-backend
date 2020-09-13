@@ -20,6 +20,7 @@ router.post('/register', authCtrl.register);
 //--------------------------------------- Board APIs -----------------------------------------//
 
 router.get('/user/get/boards', auth.isAuthenticated, boardCtrl.getUserBoards);
+router.get('/user/get/board', auth.isAuthenticated, boardCtrl.getUserBoardData);
 router.post('/user/save/board', auth.isAuthenticated, boardCtrl.saveUserBoardData);
 
 //--------------------------------------- Board APIs -----------------------------------------//

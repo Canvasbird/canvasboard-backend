@@ -34,6 +34,10 @@ function getUserBoards(req, res) {
                         });
                     }
 
+                    for(board in boards) {
+                        boards[board].board_html = json2html(boards[board].board_data);
+                    }
+                    
                     return res.status(200).json({
                         success: true,
                         boards: boards
@@ -59,6 +63,79 @@ function getUserBoards(req, res) {
     }
 
 }
+
+function getUserBoardData(req, res) {
+
+    try {
+
+        if(!req.query.board_id) {
+            throw new Error("board_id");
+        }
+
+        db.Users.findOne({
+            _id: db.mongoose.Types.ObjectId(req.token.user_id),
+        }, (err, user) => {
+
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (user) {
+
+                db.Boards.findOne({
+                    user_id: db.mongoose.Types.ObjectId(req.token.user_id),
+                    _id: db.mongoose.Types.ObjectId(req.query.board_id),
+                }, (err, board) => {
+
+                    if (err) {
+                        console.error(err);
+                        res.status(500).json({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+
+                    if(board) {
+
+                        board.board_html = json2html(board.board_data);
+
+                        return res.status(200).json({
+                            success: true,
+                            board: board
+                        });
+                    }
+                    else{
+                        return res.status(500).json({
+                            success: false,
+                            message: "Board not found"
+                        });
+                    }
+
+                });
+            }
+            else {
+                return res.status(500).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+}
+
 
 function saveUserBoardData(req, res) {
 
@@ -97,6 +174,7 @@ function saveUserBoardData(req, res) {
             if(data) {
                 res.status(200).json({
                     success: true,
+                    board_id: data._id,
                     message: "Board Saved Successfully"
                 });
             }
@@ -132,5 +210,6 @@ function saveUserBoardData(req, res) {
 
 module.exports = {
     getUserBoards,
-    saveUserBoardData
+    saveUserBoardData,
+    getUserBoardData
 }
