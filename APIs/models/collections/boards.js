@@ -24,7 +24,7 @@ const boardSchema = new mongoose.Schema({
     },
 
     board_data: {
-        type: String,
+        type: JSON,
         required: true
     },
 
