@@ -24,8 +24,6 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
-    env_file:
-      - ./apis/.env
     ports:
       - 27017:27017
     volumes:
