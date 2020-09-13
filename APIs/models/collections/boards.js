@@ -15,12 +15,12 @@ const boardSchema = new mongoose.Schema({
 
     board_desc: {
         type: String,
-        required: true
+        default: null
     },
 
     board_img: {
         type: String,
-        required: true
+        default: null
     },
 
     board_data: {

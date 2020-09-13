@@ -66,16 +66,8 @@ function saveUserBoardData(req, res) {
             throw new Error("board_name is required.")
         }
 
-        if(!req.body.board_desc){
-            throw new Error("board_desc is required.")
-        }
-
         if(!req.body.board_data){
             throw new Error("board_data is required.")
-        }
-
-        if(!req.body.board_img){
-            throw new Error("board_img is required.")
         }
 
         var new_board = db.Boards({
