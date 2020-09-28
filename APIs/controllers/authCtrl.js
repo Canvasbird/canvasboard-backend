@@ -1,10 +1,20 @@
 var jwt = require("jsonwebtoken");
 var crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 // File Imports
 
 var db = require("../models/db");
 var config = require("../config/config");
+
+
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.GMAIL_EMAIL, // generated ethereal user
+        pass: process.env.GMAIL_PASSWORD, // generated ethereal password
+    },
+});
 
 
 function login(req, res) {
@@ -32,34 +42,47 @@ function login(req, res) {
         }, (err, user) => {
 
             if (err) {
+                console.log("hy")
                 console.error(err);
                 return res.status(500).json({
                     success: false,
                     message: err.message
                 });
             }
-
             if (user) {
 
                 password = crypto.pbkdf2Sync(req.body.password, user.salt, 1000, 512, "sha512").toString('hex');
 
                 if (user.password === password) {
+                    if (user.verified) {
+                        var auth_data = {
+                            user_id: user._id,
+                            user_name: user.user_name,
+                            email_id: user.email_id,
+                            institute_name: user.institute_name,
+                            verified: user.verified,
+                            created_at: new Date()
+                        };
 
-                    var auth_data = {
-                        user_id: user._id,
-                        user_name: user.user_name,
-                        email_id: user.email_id,
-                        institute_name: user.institute_name,
-                        created_at: new Date()
-                    };
+                        var token = jwt.sign(auth_data, config.app.jwtKey);
 
-                    var token = jwt.sign(auth_data, config.app.jwtKey);
+                        return res.status(200).json({
+                            success: true,
+                            token: token
+                        });
 
-                    return res.status(200).json({
+                    } else {
+                        return res.status(500).json({
+                            success: true,
+                            message: "Please verify your email-id"
+                        });
+                    }
+
+                } else {
+                    return res.status(500).json({
                         success: true,
-                        token: token
+                        message: "Incorrect password"
                     });
-
                 }
 
             }
@@ -81,7 +104,7 @@ function login(req, res) {
     }
 }
 
-function register(req, res) {
+async function register(req, res) {
 
     try {
 
@@ -151,12 +174,35 @@ function register(req, res) {
                         message: err.message
                     });
                 }
-
                 if (data) {
-                    return res.status(200).json({
-                        success: true,
-                        message: "User Registered successfully."
-                    });
+                    const html = `Hi there,
+      <br/>
+      Thank you for registering!
+      <br/><br/>
+      Please verify your email <a href="http://localhost:4000/api/v1/verify?id=${data._id}">HERE</a>
+      <br/><br/>
+      Have a pleasant day.`
+                    transporter.sendMail({
+                        from: `CanvaBoard 👨🏻‍🏫 <${process.env.SENDER_EMAIL}>`, // sender address
+                        to: `${data.email_id}`, // list of receivers
+                        subject: "Verify Your CanvaBoard Account ✔", // Subject line
+                        text: `Hello ${data.user_name} 👋🏻\n Please verify your account`, // plain text body
+                        html: html, // html body
+                    }, (err, info) => {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                success: true,
+                                message: "Something went wrong, Try again later."
+                            });
+                        } else {
+                            console.log("Message sent: %s", info.messageId);
+                            return res.status(200).json({
+                                success: true,
+                                message: "User Registered successfully."
+                            });
+                        }
+                    })
                 }
                 else {
                     return res.status(500).json({
@@ -180,7 +226,36 @@ function register(req, res) {
 
 }
 
+
+function verify(req, res) {
+    try {
+        if (!req.query.id) {
+            res.status(500).json({
+                success: false,
+                message: "id param is required"
+            });
+            return;
+        }
+        db.Users.findByIdAndUpdate(req.query.id, { verified: true }, (err, doc) => {
+            if (err) {
+                res.status(500).json({
+                    success: false,
+                    message: err
+                });
+                return;
+            }
+            return res.status(200).json({
+                success: true,
+                message: `${doc.user_name} verified successfully.`
+            });
+        })
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     login,
-    register
+    register,
+    verify
 }

@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "2322eff5-51b0-495f-af22-5c84c4d9464a",
+		"name": "CanvasBoard-newUser",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email_id",
+							"value": "xxxxxx@xxxxxx.com",
+							"description": "Email-id of the user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "xxxxx@#xxxx",
+							"description": "Password of the user",
+							"type": "text"
+						},
+						{
+							"key": "user_name",
+							"value": "xxxxxx",
+							"description": "User name of the user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email_id",
+							"value": "xxxxxx@xxxxxx.com",
+							"description": "Email-id of the user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "xxxxx@#xxxx",
+							"description": "Password of the user",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/verify?id=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"verify"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"description": "Object-Id of the user stored in MongoDB"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

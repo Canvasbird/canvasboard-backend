@@ -16,6 +16,7 @@ var auth = require('../middlewares/auth');
 
 router.post('/login', authCtrl.login);
 router.post('/register', authCtrl.register);
+router.get('/verify', authCtrl.verify);
 
 //--------------------------------------- Board APIs -----------------------------------------//
 

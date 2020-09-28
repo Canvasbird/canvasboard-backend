@@ -12,7 +12,8 @@
     "jsonwebtoken": "^8.5.1",
     "minio": "^7.0.16",
     "mongoose": "^5.10.5",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.11"
   },
   "devDependencies": {},
   "scripts": {

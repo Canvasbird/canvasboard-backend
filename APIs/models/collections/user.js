@@ -24,10 +24,15 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
 
+    verified: {
+        type: Boolean,
+        default: false
+    },
+
     institute_name: {
         type: String,
         default: null
-    }
+    },
 
 },
     { autoCreate: true }
