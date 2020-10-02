@@ -101,7 +101,15 @@ function getUserBoardData(req, res) {
 
                     if(board) {
 
+                        board = board.toObject();
+
+                        console.log(board);
+
                         board.board_html = json2html(board.board_data);
+
+                        console.log('========================');
+
+                        console.log(board);
 
                         return res.status(200).json({
                             success: true,
