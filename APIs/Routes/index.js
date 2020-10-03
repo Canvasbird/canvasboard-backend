@@ -24,9 +24,9 @@ router.get('/user/get/boards', auth.isAuthenticated, boardCtrl.getUserBoards);
 router.get('/user/get/board', auth.isAuthenticated, boardCtrl.getUserBoardData);
 router.post('/user/save/board', auth.isAuthenticated, boardCtrl.saveUserBoardData);
 
-//--------------------------------------- Board APIs -----------------------------------------//
+//--------------------------------------- File Handler APIs -----------------------------------------//
 
-router.post('/upload/file', multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
+router.post('/upload/file',auth.isAuthenticated, multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
 router.get('/download/file', uploadCtrl.downloadFile);
 
 module.exports = router;
