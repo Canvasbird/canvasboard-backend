@@ -1,38 +1,62 @@
 var minio = require('../config/minio');
 var fs = require('fs');
 var path = require('path');
+var db = require("../models/db");
 
 
 function uploadFile(req, res) {
 
     try {
 
-        var file_name = Date.now() + '_' + req.file.originalname;
+        var user_id = req.token.user_id;
 
-        minio.minioClient.putObject('files', file_name, req.file.buffer, function (err, file) {
+        db.Users.findOne({
+            _id: db.mongoose.Types.ObjectId(user_id),
+        }, (err, user) => {
 
             if (err) {
                 console.error(err);
-                return res.status(500).json({
+                res.status(500).json({
                     success: false,
-                    message: `Something went wrong!: ${err.message}`
+                    message: err.message
                 });
             }
 
-            if (file) {
+            if (user) {
+                var file_name = user_id + "/" + Date.now() + '_' + req.file.originalname;
+                minio.minioClient.putObject('files', file_name, req.file.buffer, function (err, file) {
 
-                return res.status(200).json({
-                    success: true,
-                    message: "File Successfully Uploaded",
-                    originalname: req.file.originalname,
-                    file_url: file_name
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            success: false,
+                            message: `Something went wrong!: ${err.message}`
+                        });
+                    }
+
+                    if (file) {
+
+                        return res.status(200).json({
+                            success: true,
+                            message: "File Successfully Uploaded",
+                            originalname: req.file.originalname,
+                            file_url: file_name
+                        });
+
+                    }
+                    else {
+                        return res.status(500).json({
+                            success: false,
+                            message: "Someting Went Wrong, Please try again later"
+                        });
+                    }
+
                 });
-
             }
             else {
                 return res.status(500).json({
                     success: false,
-                    message: "Someting Went Wrong, Please try again later"
+                    message: "User not found"
                 });
             }
 
@@ -46,7 +70,51 @@ function uploadFile(req, res) {
         });
     }
 }
+function getUserRoot(req,res){
+    try {
 
+        var user_id = req.token.user_id;
+
+        db.Users.findOne({
+            _id: db.mongoose.Types.ObjectId(user_id),
+        }, (err, user) => {
+
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (user) {
+                var folder_name = user_id+"/";
+                var itemList = []
+                var stream = minio.minioClient.listObjects('files', folder_name,false)
+                stream.on("data", (obj)=>{
+                    itemList.push(obj);
+                })
+                stream.on("end", ()=>{res.status(200).json(itemList)})
+                stream.on("error", (err) => {throw err})
+                
+            }
+            else {
+                return res.status(500).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: `Something went wrong!: ${err.message}`,
+        });
+    }
+}
 
 function downloadFile(req, res) {
 
@@ -94,5 +162,6 @@ function downloadFile(req, res) {
 
 module.exports = {
     uploadFile,
-    downloadFile
+    downloadFile,
+    getUserRoot
 }
