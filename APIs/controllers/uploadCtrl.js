@@ -70,7 +70,51 @@ function uploadFile(req, res) {
         });
     }
 }
+function getUserRoot(req,res){
+    try {
 
+        var user_id = req.token.user_id;
+
+        db.Users.findOne({
+            _id: db.mongoose.Types.ObjectId(user_id),
+        }, (err, user) => {
+
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (user) {
+                var folder_name = user_id+"/";
+                var itemList = []
+                var stream = minio.minioClient.listObjects('files', folder_name,false)
+                stream.on("data", (obj)=>{
+                    itemList.push(obj);
+                })
+                stream.on("end", ()=>{res.status(200).json(itemList)})
+                stream.on("error", (err) => {throw err})
+                
+            }
+            else {
+                return res.status(500).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: `Something went wrong!: ${err.message}`,
+        });
+    }
+}
 
 function downloadFile(req, res) {
 
@@ -118,5 +162,6 @@ function downloadFile(req, res) {
 
 module.exports = {
     uploadFile,
-    downloadFile
+    downloadFile,
+    getUserRoot
 }

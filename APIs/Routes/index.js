@@ -28,5 +28,6 @@ router.post('/user/save/board', auth.isAuthenticated, boardCtrl.saveUserBoardDat
 
 router.post('/upload/file',auth.isAuthenticated, multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
 router.get('/download/file', uploadCtrl.downloadFile);
+router.get('/download/folder',auth.isAuthenticated, uploadCtrl.getUserRoot);
 
 module.exports = router;
