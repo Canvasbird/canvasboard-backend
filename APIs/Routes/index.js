@@ -7,6 +7,7 @@ var router = express.Router();
 var authCtrl = require('../controllers/authCtrl');
 var boardCtrl = require('../controllers/boardCtrl');
 var uploadCtrl = require('../controllers/uploadCtrl');
+var shareCtrl = require('../controllers/shareCtrl');
 
 
 // Middlewares
@@ -29,5 +30,8 @@ router.post('/user/save/board', auth.isAuthenticated, boardCtrl.saveUserBoardDat
 router.post('/upload/file',auth.isAuthenticated, multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
 router.get('/download/file', uploadCtrl.downloadFile);
 router.get('/download/folder',auth.isAuthenticated, uploadCtrl.getUserRoot);
+router.get('/share/file',auth.isAuthenticated, shareCtrl.shareFile);
+router.get('/share/getfile/:file', shareCtrl.getSharedFile);
+router.get('/share/sharedlist', auth.isAuthenticated,shareCtrl.listUserSharedFiles);
 
 module.exports = router;

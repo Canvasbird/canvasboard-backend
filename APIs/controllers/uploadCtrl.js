@@ -95,7 +95,7 @@ function getUserRoot(req,res){
                     itemList.push(obj);
                 })
                 stream.on("end", ()=>{res.status(200).json(itemList)})
-                stream.on("error", (err) => {throw err})
+                stream.on("error", (err) => {throw new Error(err)})
                 
             }
             else {
