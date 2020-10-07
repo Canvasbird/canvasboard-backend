@@ -22,7 +22,7 @@ passport.deserializeUser(function (user, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENTID,
     clientSecret: process.env.GOOGLE_CLIENTSECTRET,
-    callbackURL: `http://localhost:${config.app.port}/google/callback`,
+    callbackURL: `https://api.canvasboard.live/google/callback`,
 },
     function (accessToken, refreshToken, profile, done) {
         try {
