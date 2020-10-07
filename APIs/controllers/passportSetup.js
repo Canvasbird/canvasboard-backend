@@ -10,7 +10,6 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (user, done) {
-    console.log('dese', user)
     db.Users.findById(user, (err, user) => {
         if (err) {
             done(err);
