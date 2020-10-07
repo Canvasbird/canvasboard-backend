@@ -4,7 +4,7 @@ var cors = require('cors');
 const passport = require('passport');
 const cookieSession = require('cookie-session')
 var jwt = require("jsonwebtoken");
-require('../APIs/controllers/passportSetup');
+require('./passportSetup');
 
 var config = require('./config/config');
 var router = require('./Routes/index');
