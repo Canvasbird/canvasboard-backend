@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 var crypto = require("crypto");
 const nodemailer = require("nodemailer");
-
+const moment  = require("moment")
 // File Imports
 
 var db = require("../models/db");
@@ -225,8 +225,175 @@ async function register(req, res) {
     }
 
 }
+function reset(req, res){
+    if (!req.body.password) {
+        res.status(500).json({
+            success: false,
+            message: "password is required"
+        });
+        return;
+    }
+    var reset_token = req.body.reset_token;
+    var new_pass = req.body.password;
+    db.PasswordReset.findOne({reset_token:reset_token}, (err, pass_reset) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+        if(pass_reset){
+            var valid_till = moment(pass_reset.issued_on).add(30,'m')
+            if(moment().isBefore(valid_till) && pass_reset.is_used===false){
+                db.Users.findById(pass_reset.user_id,  (err,user) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+                    if(user){
+                        var salt = crypto.randomBytes(16).toString('hex');
+                        user.salt = salt
+                        user.password = crypto.pbkdf2Sync(new_pass, salt, 1000, 512, "sha512").toString('hex');
+                        user.save((err,user_data)=> {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({
+                                    success: false,
+                                    message: err.message
+                                });
+                            }
+                            if(user_data){
+                                pass_reset.is_used = true;
+                                pass_reset.used_on = Date.now();
+                                pass_reset.save((err,data) => {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).json({
+                                            success: false,
+                                            message: err.message
+                                        });
+                                    }
+                                    if(data){
+                                        return res.status(200).json({
+                                            success: true,
+                                            message: "Password Updated Successfully"
+                                        });
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    else {
+                        console.error(err);
+                        return res.status(500).json({
+                            success: false,
+                            message: "Invalid user"
+                        });
+                    }
+                })
+            }else{
+                return res.status(500).json({
+                    success: false,
+                    message: "Token expired! Try again!"
+                });
+            }
+        }
+        else{
+            return res.status(500).json({
+                success: false,
+                message: "Invalid Token"
+            });
+        }
+    } )
+}
 
+function forget(req, res){
+    try{
+        if (!req.body.email_id) {
+            res.status(500).json({
+                success: false,
+                message: "email_id is required"
+            });
+            return;
+        }
+        db.Users.findOne({
+            email_id: req.body.email_id
+        }, (err, user) => {
 
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            if (user) {
+                pass_reset = {
+                    reset_token: crypto.randomBytes(16).toString('hex'),
+                    user_id: user._id
+                }
+                pass_obj = new db.PasswordReset(pass_reset);
+                pass_obj.save( (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+                    if (data){
+                        const html = `Hi there,
+        <br/>
+        Go to the Link below to Reset Your Password! Link valid for 30 minutes.
+        <br/><br/>
+        Please verify your email <a href="http://localhost:4000/api/v1/reset?id=${data.reset_token}">HERE</a>
+        <br/><br/>
+        If your did not requested password reset kindly ignore this message.`
+                        transporter.sendMail({
+                            from: `CanvaBoard 👨🏻‍🏫 <${process.env.SENDER_EMAIL}>`, // sender address
+                            to: `${user.email_id}`, // list of receivers
+                            subject: "CanvaBoard Account Password Reset ✔", // Subject line
+                            text: `Hello ${user.user_name} 👋🏻\n Reset Your Password`, // plain text body
+                            html: html, // html body
+                        }, (err, info) => {
+                            if (err) {
+                                console.log(err)
+                                return res.status(500).json({
+                                    success: true,
+                                    message: "Something went wrong, Try again later."
+                                });
+                            } else {
+                                console.log("Message sent: %s", info.messageId);
+                                return res.status(200).json({
+                                    success: true,
+                                    message: "Reset Password mail sent succesfully"
+                                });
+                            }
+                        })
+                    }
+                })
+                
+            }
+            else {
+                return res.status(500).json({
+                    success: false,
+                    message: "User not Found"
+                });
+            }
+        })
+    } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+        success: false,
+        message: err.message
+    });
+}
+}
 function verify(req, res) {
     try {
         if (!req.query.id) {
@@ -257,5 +424,7 @@ function verify(req, res) {
 module.exports = {
     login,
     register,
-    verify
+    verify,
+    forget,
+    reset
 }
