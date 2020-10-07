@@ -2,6 +2,9 @@ var jwt = require("jsonwebtoken");
 var crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const moment  = require("moment")
+var passport = require('passport')
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
+
 // File Imports
 
 var db = require("../models/db");
@@ -419,6 +422,22 @@ function verify(req, res) {
     } catch (error) {
 
     }
+}
+
+function googleLogin(req, res) {
+
+    passport.use(new GoogleStrategy({
+        clientID: "1072945288142-9l42v56jia9ja9bb8c7rr7jd7sj10rfh.apps.googleusercontent.com",
+        clientSecret: "3XiMUUyzxGa-YQiqpzDgkAvh",
+        callbackURL: "http://localhost:4000/google/callback",
+        passReqToCallback: true
+    },
+        function (request, accessToken, refreshToken, profile, done) {
+            User.findOrCreate({ googleId: profile.id }, function (err, user) {
+                return done(err, user);
+            });
+        }
+    ));
 }
 
 module.exports = {

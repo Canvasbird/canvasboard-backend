@@ -29,11 +29,11 @@ router.post('/user/save/board', auth.isAuthenticated, boardCtrl.saveUserBoardDat
 
 //--------------------------------------- File Handler APIs -----------------------------------------//
 
-router.post('/upload/file',auth.isAuthenticated, multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
+router.post('/upload/file', auth.isAuthenticated, multer({ storage: multer.memoryStorage() }).single("fileUploader"), uploadCtrl.uploadFile);
 router.get('/download/file', uploadCtrl.downloadFile);
-router.get('/download/folder',auth.isAuthenticated, uploadCtrl.getUserRoot);
-router.get('/share/file',auth.isAuthenticated, shareCtrl.shareFile);
+router.get('/download/folder', auth.isAuthenticated, uploadCtrl.getUserRoot);
+router.get('/share/file', auth.isAuthenticated, shareCtrl.shareFile);
 router.get('/share/getfile/:file', shareCtrl.getSharedFile);
-router.get('/share/sharedlist', auth.isAuthenticated,shareCtrl.listUserSharedFiles);
+router.get('/share/sharedlist', auth.isAuthenticated, shareCtrl.listUserSharedFiles);
 
 module.exports = router;
