@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2322eff5-51b0-495f-af22-5c84c4d9464a",
+		"_postman_id": "d42ad0e7-c5be-43fe-9e96-bd0c0283b3c1",
 		"name": "CanvasBoard-newUser",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -118,6 +118,78 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "reset_token",
+							"value": "<reset token>",
+							"description": "this is reset token sent in mail, available as  get param",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "<new_password>",
+							"description": "New Password for user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/reset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"reset"
+					]
+				},
+				"description": "Reset password from link in gmail"
+			},
+			"response": []
+		},
+		{
+			"name": "Forget",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email_id",
+							"value": "xxxxxx@xxxxxx.com",
+							"description": "Email-id of the user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/forget",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"forget"
+					]
+				},
+				"description": "Send forget password mail"
 			},
 			"response": []
 		}

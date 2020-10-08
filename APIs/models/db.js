@@ -40,6 +40,7 @@ const db = {};
 db.Users = require('./collections/user');
 db.Boards = require('./collections/boards');
 db.SharedFiles = require('./collections/sharedFiles');
+db.PasswordReset = require('./collections/passwordReset');
 
 db.mongoose = mongoose;
 
