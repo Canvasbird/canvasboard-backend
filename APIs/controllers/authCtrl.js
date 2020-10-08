@@ -182,7 +182,7 @@ async function register(req, res) {
       <br/>
       Thank you for registering!
       <br/><br/>
-      Please verify your email <a href="http://localhost:4000/api/v1/verify?id=${data._id}">HERE</a>
+      Please verify your email <a href="https://api.canvasboard.live/api/v1/verify?id=${data._id}">HERE</a>
       <br/><br/>
       Have a pleasant day.`
                     transporter.sendMail({
