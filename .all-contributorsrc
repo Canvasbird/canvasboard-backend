@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "NavaneethNivol",
+      "name": "I'm Navaneeth Nivol",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/33155848?v=4",
+      "profile": "https://github.com/NavaneethNivol",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "canvasboard-backend",
+  "projectOwner": "Canvasbird",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
