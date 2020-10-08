@@ -1,9 +1,7 @@
 var jwt = require("jsonwebtoken");
 var crypto = require("crypto");
 const nodemailer = require("nodemailer");
-const moment  = require("moment")
-var passport = require('passport')
-var GoogleStrategy = require('passport-google-oauth2').Strategy;
+const moment = require("moment")
 
 // File Imports
 
@@ -228,7 +226,7 @@ async function register(req, res) {
     }
 
 }
-function reset(req, res){
+function reset(req, res) {
     if (!req.body.reset_token) {
         res.status(500).json({
             success: false,
@@ -245,7 +243,7 @@ function reset(req, res){
     }
     var reset_token = req.body.reset_token;
     var new_pass = req.body.password;
-    db.PasswordReset.findOne({reset_token:reset_token}, (err, pass_reset) => {
+    db.PasswordReset.findOne({ reset_token: reset_token }, (err, pass_reset) => {
         if (err) {
             console.error(err);
             return res.status(500).json({
@@ -253,10 +251,10 @@ function reset(req, res){
                 message: err.message
             });
         }
-        if(pass_reset){
-            var valid_till = moment(pass_reset.issued_on).add(30,'m')
-            if(moment().isBefore(valid_till) && pass_reset.is_used===false){
-                db.Users.findById(pass_reset.user_id,  (err,user) => {
+        if (pass_reset) {
+            var valid_till = moment(pass_reset.issued_on).add(30, 'm')
+            if (moment().isBefore(valid_till) && pass_reset.is_used === false) {
+                db.Users.findById(pass_reset.user_id, (err, user) => {
                     if (err) {
                         console.error(err);
                         return res.status(500).json({
@@ -264,11 +262,11 @@ function reset(req, res){
                             message: err.message
                         });
                     }
-                    if(user){
+                    if (user) {
                         var salt = crypto.randomBytes(16).toString('hex');
                         user.salt = salt
                         user.password = crypto.pbkdf2Sync(new_pass, salt, 1000, 512, "sha512").toString('hex');
-                        user.save((err,user_data)=> {
+                        user.save((err, user_data) => {
                             if (err) {
                                 console.error(err);
                                 return res.status(500).json({
@@ -276,10 +274,10 @@ function reset(req, res){
                                     message: err.message
                                 });
                             }
-                            if(user_data){
+                            if (user_data) {
                                 pass_reset.is_used = true;
                                 pass_reset.used_on = Date.now();
-                                pass_reset.save((err,data) => {
+                                pass_reset.save((err, data) => {
                                     if (err) {
                                         console.error(err);
                                         return res.status(500).json({
@@ -287,7 +285,7 @@ function reset(req, res){
                                             message: err.message
                                         });
                                     }
-                                    if(data){
+                                    if (data) {
                                         return res.status(200).json({
                                             success: true,
                                             message: "Password Updated Successfully"
@@ -305,24 +303,24 @@ function reset(req, res){
                         });
                     }
                 })
-            }else{
+            } else {
                 return res.status(500).json({
                     success: false,
                     message: "Token expired! Try again!"
                 });
             }
         }
-        else{
+        else {
             return res.status(500).json({
                 success: false,
                 message: "Invalid Token"
             });
         }
-    } )
+    })
 }
 
-function forget(req, res){
-    try{
+function forget(req, res) {
+    try {
         if (!req.body.email_id) {
             res.status(500).json({
                 success: false,
@@ -348,7 +346,7 @@ function forget(req, res){
                     user_id: user._id
                 }
                 pass_obj = new db.PasswordReset(pass_reset);
-                pass_obj.save( (err, data) => {
+                pass_obj.save((err, data) => {
                     if (err) {
                         console.error(err);
                         return res.status(500).json({
@@ -356,7 +354,7 @@ function forget(req, res){
                             message: err.message
                         });
                     }
-                    if (data){
+                    if (data) {
                         const html = `Hi there,
         <br/>
         Go to the Link below to Reset Your Password! Link valid for 30 minutes.
@@ -389,7 +387,7 @@ function forget(req, res){
                         })
                     }
                 })
-                
+
             }
             else {
                 return res.status(500).json({
@@ -399,12 +397,12 @@ function forget(req, res){
             }
         })
     } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-        success: false,
-        message: err.message
-    });
-}
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
 }
 function verify(req, res) {
     try {
@@ -431,22 +429,6 @@ function verify(req, res) {
     } catch (error) {
 
     }
-}
-
-function googleLogin(req, res) {
-
-    passport.use(new GoogleStrategy({
-        clientID: "1072945288142-9l42v56jia9ja9bb8c7rr7jd7sj10rfh.apps.googleusercontent.com",
-        clientSecret: "3XiMUUyzxGa-YQiqpzDgkAvh",
-        callbackURL: "http://localhost:4000/google/callback",
-        passReqToCallback: true
-    },
-        function (request, accessToken, refreshToken, profile, done) {
-            User.findOrCreate({ googleId: profile.id }, function (err, user) {
-                return done(err, user);
-            });
-        }
-    ));
 }
 
 module.exports = {
