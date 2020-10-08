@@ -33,7 +33,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/NavaneethNivol"><img src="https://avatars0.githubusercontent.com/u/33155848?v=4" width="100px;" alt=""/><br /><sub><b>I'm Navaneeth Nivol</b></sub></a><br /><a href="https://github.com/Canvasbird/canvasboard-backend/commits?author=NavaneethNivol" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/NavaneethNivol"><img src="https://avatars0.githubusercontent.com/u/33155848?v=4" width="100px;" alt=""/><br /><sub><b>I'm Navaneeth Nivol</b></sub></a><br /><a href="https://github.com/Canvasbird/canvasboard-backend/commits?author=NavaneethNivol" title="Code">💻</a> <a href="#maintenance-AsishRaju" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/AyonPal"><img src="https://avatars3.githubusercontent.com/u/17457713?v=4" width="100px;" alt=""/><br /><sub><b>Ayon Pal</b></sub></a><br /><a href="https://github.com/Canvasbird/canvasboard-backend/commits?author=AyonPal" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/AsishRaju"><img src="https://avatars0.githubusercontent.com/u/41658324?v=4" width="100px;" alt=""/><br /><sub><b>Asish Raju</b></sub></a><br /><a href="https://github.com/Canvasbird/canvasboard-backend/commits?author=AsishRaju" title="Code">💻</a> <a href="#maintenance-AsishRaju" title="Maintenance">🚧</a></td>
   </tr>
