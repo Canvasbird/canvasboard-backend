@@ -22,6 +22,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "AsishRaju",
+      "name": "Asish Raju",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/41658324?v=4",
+      "profile": "https://github.com/AsishRaju",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
