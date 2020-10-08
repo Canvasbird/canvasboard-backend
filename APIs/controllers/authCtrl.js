@@ -226,6 +226,13 @@ async function register(req, res) {
 
 }
 function reset(req, res){
+    if (!req.body.reset_token) {
+        res.status(500).json({
+            success: false,
+            message: "reset_token is required"
+        });
+        return;
+    }
     if (!req.body.password) {
         res.status(500).json({
             success: false,
@@ -334,7 +341,7 @@ function forget(req, res){
 
             if (user) {
                 pass_reset = {
-                    reset_token: crypto.randomBytes(16).toString('hex'),
+                    reset_token: Math.floor(100000 + Math.random() * 900000).toString(),
                     user_id: user._id
                 }
                 pass_obj = new db.PasswordReset(pass_reset);
@@ -351,7 +358,9 @@ function forget(req, res){
         <br/>
         Go to the Link below to Reset Your Password! Link valid for 30 minutes.
         <br/><br/>
-        Please verify your email <a href="http://localhost:4000/api/v1/reset?id=${data.reset_token}">HERE</a>
+        Please reset password <a href="#">HERE</a>
+        <br/>
+        Enter confirmation code <code>${data.reset_token}</code>
         <br/><br/>
         If your did not requested password reset kindly ignore this message.`
                         transporter.sendMail({
