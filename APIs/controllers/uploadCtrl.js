@@ -9,7 +9,14 @@ function uploadFile(req, res) {
     try {
 
         var user_id = req.token.user_id;
-
+        if (!req.query.path) {
+            res.status(500).json({
+                success: false,
+                message: "path is required"
+            });
+            return;
+        }
+        var path  =  req.query.path
         db.Users.findOne({
             _id: db.mongoose.Types.ObjectId(user_id),
         }, (err, user) => {
@@ -35,13 +42,43 @@ function uploadFile(req, res) {
                     }
 
                     if (file) {
-
-                        return res.status(200).json({
-                            success: true,
-                            message: "File Successfully Uploaded",
-                            originalname: req.file.originalname,
-                            file_url: file_name
-                        });
+                        if(path==="/"){
+                            db.Users.findByIdAndUpdate(user_id,{ $addToSet: { root_files: [file_name] } },(err,folder) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({
+                                        success: false,
+                                        message: err.message
+                                    });
+                                }
+                                return res.status(200).json({
+                                    success: true,
+                                    message: "File Successfully Uploaded",
+                                    originalname: req.file.originalname,
+                                    file_url: file_name,
+                                    folder:folder
+                                });
+                            })
+                        }
+                        else{
+                            db.FolderObjects.findByIdAndUpdate(path,{lastAccessedOn: Date.now(), lastModifiedOn: Date.now(), $addToSet: { files: [file_name] } },(err,folder) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({
+                                        success: false,
+                                        message: err.message
+                                    });
+                                }
+                                return res.status(200).json({
+                                    success: true,
+                                    message: "File Successfully Uploaded",
+                                    originalname: req.file.originalname,
+                                    file_url: file_name,
+                                    folder:folder
+                                });
+                            }) 
+                        }
+                                              
 
                     }
                     else {
@@ -52,51 +89,6 @@ function uploadFile(req, res) {
                     }
 
                 });
-            }
-            else {
-                return res.status(500).json({
-                    success: false,
-                    message: "User not found"
-                });
-            }
-
-        });
-
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({
-            success: false,
-            message: `Something went wrong!: ${err.message}`,
-        });
-    }
-}
-function getUserRoot(req,res){
-    try {
-
-        var user_id = req.token.user_id;
-
-        db.Users.findOne({
-            _id: db.mongoose.Types.ObjectId(user_id),
-        }, (err, user) => {
-
-            if (err) {
-                console.error(err);
-                res.status(500).json({
-                    success: false,
-                    message: err.message
-                });
-            }
-
-            if (user) {
-                var folder_name = user_id+"/";
-                var itemList = []
-                var stream = minio.minioClient.listObjects('files', folder_name,false)
-                stream.on("data", (obj)=>{
-                    itemList.push(obj);
-                })
-                stream.on("end", ()=>{res.status(200).json(itemList)})
-                stream.on("error", (err) => {throw new Error(err)})
-                
             }
             else {
                 return res.status(500).json({
@@ -158,10 +150,195 @@ function downloadFile(req, res) {
     }
 
 }
+function addFolder(req,res) {
+    try{
+        var user_id = req.token.user_id;
+        if (!req.body.parent) {
+            res.status(500).json({
+                success: false,
+                message: "parent is required"
+            });
+            return;
+        }
+        if (!req.body.title) {
+            res.status(500).json({
+                success: false,
+                message: "title is required"
+            });
+            return;
+        }
+        db.Users.findById(user_id, (err, user) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+            if (user) {
+                let parent = req.body.parent;
+                if(parent !== "/"){
+                    db.FolderObjects.findByIdAndUpdate(parent, {lastAccessedOn: Date.now(), lastModifiedOn: Date.now()}, (err, parent_folder) => {
+                        if(err){
+                            console.error(err);
+                            return res.status(500).json({
+                                success: false,
+                                message: err.message
+                            });
+                        }
+                        if(!parent_folder){
+                            return res.status(500).json({
+                                success: false,
+                                message: "No path to folder"
+                            });
+                        }
+                    })
+                }
+                if(parent==="/"){
+                    parent=user_id;
+                }
+                let title = req.body.title;
+                let tags = req.body.tags;
+                let color = req.body.color;
+                let subtitle  = req.body.subtitle;
+                let new_folder = {
+                    title: title,
+                    tags: tags,
+                    color: color,
+                    subtitle: subtitle,
+                    parent:  parent,
+                    owner: user_id
+                }
+                var folder_obj = new db.FolderObjects(new_folder);
+                folder_obj.save((err, data) => {
 
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+                    if(req.body.parent === "/"){
+                        db.Users.findByIdAndUpdate(user_id,{ $addToSet: { root_folders: [data._id] } },(err) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({
+                                    success: false,
+                                    message: err.message
+                                });
+                            }
+                            return res.status(200).json({
+                                success: true,
+                                message: "Folder Created Successfully",
+                                folder: data,
+                            });
+                        })
+                    }else{
+                        db.FolderObjects.findByIdAndUpdate(parent,{ $addToSet: { childFolders: [data._id] } },(err) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({
+                                    success: false,
+                                    message: err.message
+                                });
+                            }
+                            return res.status(200).json({
+                                success: true,
+                                message: "Folder Created Successfully",
+                                folder: data,
+                            });
+                        })
+                    }
+                })                
+            }
+            else {
+                return res.status(500).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+        })
+    }
+    catch  (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: `Something went wrong!: ${err.message}`,
+        });
+    }
+    
+}
+function listFolder(req,res){
+    try{
+        var user_id = req.token.user_id;
+        if (!req.query.path) {
+            res.status(500).json({
+                success: false,
+                message: "path is required"
+            });
+            return;
+        }
+        db.Users.findById(user_id, (err, user) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+            if (user) {
+                let path = req.query.path;
+                if(path==="/"){
+                    path = user_id
+                    db.Users.findById(user_id, async (err,folders) => {
+                        if (err) {
+                            console.error(err);
+                            res.status(500).json({
+                                success: false,
+                                message: err.message
+                            });
+                        }
+                        let listFolders = []
+                        for(f in folders.root_folders) {
+                            let _f = await db.FolderObjects.findById(folders.root_folders[f])
+                            listFolders.push({ id: _f._id, color: _f.color, title: _f.title, subtitle: _f.subtitle, tags: _f.tags, createdOn: _f.createdOn, lastAccessedOn: _f.lastAccessedOn, lastModifiedOn: _f.lastModifiedOn });
+                        }
+                        return res.json({folders: listFolders, files: folders.root_files})
+                    })
+                }
+                else{
+                    db.FolderObjects.findByIdAndUpdate(path,{lastAccessedOn: Date.now()},async (err,parent_folder) => {
+                        if (err) {
+                            console.error(err);
+                            res.status(500).json({
+                                success: false,
+                                message: err.message
+                            });
+                        }
+                        let listFolders = []
+                        for(f in parent_folder.childFolders) {
+                            let _f = await db.FolderObjects.findById(parent_folder.childFolders[f])
+                            listFolders.push({ id: _f._id, color: _f.color, title: _f.title, subtitle: _f.subtitle, tags: _f.tags, createdOn: _f.createdOn, lastAccessedOn: _f.lastAccessedOn, lastModifiedOn: _f.lastModifiedOn });
+                        }
+                        return res.json({folders: listFolders, files: parent_folder.files})
+                    })
+                }
+            }
+        })
+    }
+    catch  (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: `Something went wrong!: ${err.message}`,
+        });
+    }
+}
 
 module.exports = {
     uploadFile,
     downloadFile,
-    getUserRoot
+    addFolder,
+    listFolder,
 }

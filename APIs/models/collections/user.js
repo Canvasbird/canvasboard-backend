@@ -33,6 +33,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    root_folders: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "folderObject",
+        default: [],
+    },
+    root_files: {
+        type:  [String],
+        default: []
+    }
 
 },
     { autoCreate: true }
