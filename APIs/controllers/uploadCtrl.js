@@ -55,8 +55,7 @@ function uploadFile(req, res) {
                                     success: true,
                                     message: "File Successfully Uploaded",
                                     originalname: req.file.originalname,
-                                    file_url: file_name,
-                                    folder:folder
+                                    file_url: file_name
                                 });
                             })
                         }
@@ -73,8 +72,7 @@ function uploadFile(req, res) {
                                     success: true,
                                     message: "File Successfully Uploaded",
                                     originalname: req.file.originalname,
-                                    file_url: file_name,
-                                    folder:folder
+                                    file_url: file_name
                                 });
                             }) 
                         }
