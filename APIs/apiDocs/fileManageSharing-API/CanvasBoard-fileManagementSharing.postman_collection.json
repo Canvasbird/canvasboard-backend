@@ -28,7 +28,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/v1/upload/file",
+					"raw": "http://localhost:4000/api/v1/upload/file?path",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -39,41 +39,13 @@
 						"v1",
 						"upload",
 						"file"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List User Root Files",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "X-AUTH-TOKEN",
-						"value": "<token  here>",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"url": {
-					"raw": "http://localhost:4000/api/v1/download/folder",
-					"protocol": "http",
-					"host": [
-						"localhost"
 					],
-					"port": "4000",
-					"path": [
-						"api",
-						"v1",
-						"download",
-						"folder"
+					"query": [
+						{
+							"key": "path",
+							"value": null,
+							"description": "folder path of file as (use parent id as path or / for root)"
+						}
 					]
 				}
 			},
@@ -183,6 +155,113 @@
 						"sharedlist"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Folder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "parent",
+							"value": "",
+							"description": "parent folder id of  current folder (/ for root folder)",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "",
+							"description": "title/name of folder",
+							"type": "text"
+						},
+						{
+							"key": "subtitle",
+							"value": "",
+							"description": "subtitle",
+							"type": "text"
+						},
+						{
+							"key": "color",
+							"value": "",
+							"description": "folder color",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "",
+							"description": "tags of  folder as array",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/add/folder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"add",
+						"folder"
+					]
+				},
+				"description": "Add folder as user"
+			},
+			"response": []
+		},
+		{
+			"name": "List Files and Folders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/list/folder?path=/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"list",
+						"folder"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "/",
+							"description": "/ for root or folder id"
+						}
+					]
+				},
+				"description": "List files and folder of current folder"
 			},
 			"response": []
 		}
