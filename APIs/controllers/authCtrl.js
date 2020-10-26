@@ -186,7 +186,7 @@ async function register(req, res) {
                     transporter.sendMail({
                         from: `CanvaBoard 👨🏻‍🏫 <${process.env.SENDER_EMAIL}>`, // sender address
                         to: `${data.email_id}`, // list of receivers
-                        subject: "Verify Your CanvaBoard Account ✔", // Subject line
+                        subject: "Verify Your Canvasboard Account ✔", // Subject line
                         text: `Hello ${data.user_name} 👋🏻\n Please verify your account`, // plain text body
                         html: html, // html body
                     }, (err, info) => {
