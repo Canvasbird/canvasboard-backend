@@ -10,6 +10,9 @@ require('./passportSetup');
 var config = require('./config/config');
 var router = require('./Routes/index');
 
+const folderRoutes = require('./Routes/folder');
+const fileRoutes = require('./Routes/file')
+
 var app = express();
 app.use(morgan('dev'))
 
@@ -68,6 +71,11 @@ app.get('/logout', (req, res) => {
 })
 
 app.use('/api/v1', router);
-
+app.use('/api/v1', folderRoutes)
+app.use('/api/v1', fileRoutes)
 
 app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));
+
+// * FOR TESTING
+// module.exports = app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));
+
