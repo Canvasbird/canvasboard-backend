@@ -16,7 +16,10 @@ exports.createFile = async (req, res) => {
                 const rootFolder = await Folders.findById(req.body.folder_id)
                 try {
                     try {
-                        await minio.minioClient.putObject('files', _id, req.file.buffer)
+                        // Hey Ayon can you add minioServer work here, I don't have any experience with minio.
+                        // I had written all of required CRUD queries, please go through it.   
+                        //await minio.minioClient.putObject('files', _id, req.file.buffer)
+                        console.log("FIX MINIO!");
                         try {
                             const result = await rootFolder.addChildFile(_id)
                             res.status(200).json(httpStatus200(result))
