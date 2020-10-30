@@ -1,22 +1,47 @@
-# canvasboard-backend
+# Canvasboard Backend 👨🏻‍💻+🎨
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
+<img src="https://img.shields.io/badge/We%20❤-NodeJS-green?style=for-the-badge"> [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=for-the-badge)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Canvasboard Backend built on NodeJS.
+## Overview 👀
 
-### Running Backend
+#### Canvasboard is an interactive board with plugins focusing on replacing the need of multiple platforms for teaching, presenting, managing or explaining your ideas.
+
+#### The interactive plugins are built using web technologies to ease your work right within a single platform, this repo adds the esence of being a true full stack project.
+
+## Running Backend 🏃🏻‍♂️
+
 ```
 > Clone the repo
-> cd canvasboard-backend/apis
-> npm install
+> $ cd canvasboard-backend/apis
+> $ npm install
 > rename .env_template to .env
 > fill in the credentials in .env files
-> npm start
+```
+
+**Local Run 💻**
+
+```
+> $ cd canvasboard-backend/apis
+> $ npm start
 > APIs runs on port 4000
 ```
 
-### API Docs
+**Docker Run 🚢**
+
+```
+> make sure you have docker up and running
+> make sure port 4000 is free
+> set node_env=prod in .env file
+> $ cd canvasboard-backend
+> $ docker-compose up --build
+> APIs runs on port 4000
+```
+
+## API Docs 📘
 
 ```
 > cd canvasboard-backend/apis/apiDocs/
@@ -24,6 +49,11 @@ Canvasboard Backend built on NodeJS.
 > make sure you have postman installed
 > import the <filename>.postman_collection in postman
 ```
+
+### Tech Stack 🧐
+
+<p align="left"> <a href="https://www.docker.com/" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://expressjs.com" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://www.nginx.com" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/nginx/nginx-original.svg" alt="nginx" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank"> <img src="https://devicons.github.io/devicon/devicon.git/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> </p>
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -41,6 +71,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

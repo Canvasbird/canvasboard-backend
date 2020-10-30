@@ -1,7 +1,6 @@
 version: "3"
 
 services:
-
   # -------------------- CanvasBoard APIs Express Container -------------------- #
 
   canvasboard-apis:
@@ -18,14 +17,13 @@ services:
       - docker_net
     restart: unless-stopped
 
-
   # -------------------- MongoDB -------------------- #
 
   mongodb:
     image: mongo
     container_name: mongodb
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongodb-data:/data/db
     networks:
