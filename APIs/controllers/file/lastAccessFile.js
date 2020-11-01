@@ -15,7 +15,6 @@ exports.lastAccessedModifiedFile = async (req, res) =>{
     }
     else {
         try { 
-            console.log(req.file)
            await Files.findByIdAndUpdate(req.body.file_id, {$set:{
                 last_accessed_on:Date.now(),
                 last_modified_on:Date.now(),

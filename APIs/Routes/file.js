@@ -14,6 +14,11 @@ router.post("/user/folder/create-file", isAuthenticated, multer({ storage: multe
 router.post("/user/folder/rename-file", isAuthenticated, renameFileAttributes)
 router.get("/user/folder/files/:folder_id", isAuthenticated, viewFiles);
 router.delete("/user/folder/remove-file", isAuthenticated, removeFile)
-router.post("/user/folder/last-accessed-file", isAuthenticated, multer({ storage: multer.memoryStorage() }).single("file_url"), lastAccessedModifiedFile)
+router.post("/user/folder/last-accessed-file", 
+
+                        isAuthenticated, 
+                        multer({ storage: multer.memoryStorage() }).single("file_url"), 
+                        lastAccessedModifiedFile
+            )
 
 module.exports = router
