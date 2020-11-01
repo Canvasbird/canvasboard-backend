@@ -7,12 +7,8 @@ exports.removeChildFolder = async (req, res) =>{
         await Folders.findByIdAndDelete(req.body.nested_folder_id)
         try {
             const rootFolder = await Folders.findById(req.body.folder_id)
-            try {
-                const result =  await rootFolder.removeChildFolderReference(req.body.nested_folder_id)
-                res.status(200).json(httpStatus200(result))
-            } catch (error) {
-                if(error) res.status(500).json(httpStatus500(error))
-            }
+            const message =  await rootFolder.removeChildFolderReference(req.body.nested_folder_id)
+            res.status(200).json(httpStatus200(null, message))
         } catch (error) {
             if(error) res.status(500).json(httpStatus500(error))
         }

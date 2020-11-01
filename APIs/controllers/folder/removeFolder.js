@@ -7,12 +7,8 @@ exports.removeFolder = async (req, res) =>{
         await Folders.findByIdAndDelete(req.body.folder_id)
         try {
             const user = await Users.findById(req.body.user_id)
-                try {
-                    const result = user.removeFolderReference(req.body.folder_id)
-                    res.status(200).json(httpStatus200(result))  
-                } catch (error) {
-                    if(error) res.status(500).json(httpStatus500(error))
-                }
+            const message = user.removeFolderReference(req.body.folder_id)
+            res.status(200).json(httpStatus200(null, message))  
         } catch (error) {
             if(error) res.status(500).json(httpStatus500(error))
         }

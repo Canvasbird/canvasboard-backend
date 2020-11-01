@@ -24,4 +24,10 @@ const fileSchema = new Schema({
     }
 })
 
+
+fileSchema.methods.addUrl = function(file_url){
+    this.file_url = file_url;
+    return this.save()
+}
+
 module.exports = mongoose.model('File', fileSchema);

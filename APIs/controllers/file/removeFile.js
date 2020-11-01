@@ -7,12 +7,8 @@ exports.removeFile = async (req, res)=>{
         await Files.findByIdAndDelete(req.body.file_id)
         try {
             const rootFolder= await Folders.findById(req.body.folder_id)
-            try {
-                const result = await rootFolder.removeFileReference(req.body.file_id)
-                res.status(200).json(httpStatus200(result))
-            } catch (error) {
-                if(error) res.status(500).json(httpStatus500(error))
-            }
+            const message = await rootFolder.removeFileReference(req.body.file_id)
+            res.status(200).json(httpStatus200(null, message))
         } catch (error) {
             if(error) res.status(500).json(httpStatus500(error))
         }

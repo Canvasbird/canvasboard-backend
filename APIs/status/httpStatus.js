@@ -1,5 +1,5 @@
 // * HTTP STATUS 500
-function httpStatus500(error, status=500){
+function httpStatus500(error){
     return {
         message:error.message,
         success:false
@@ -7,9 +7,10 @@ function httpStatus500(error, status=500){
 }
 
 // * HTTP STATUS 200
-function httpStatus200(message, status=200){
+function httpStatus200(message, content){
     return {
         message:message,
+        content:content,
         success:true
     }
 }

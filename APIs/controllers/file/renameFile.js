@@ -10,7 +10,7 @@ exports.renameFileAttributes = async (req, res) =>{
                 file_tag:req.body.file_tag
             }
         })
-        res.status(200).json(httpStatus200("File Renamed!"))
+        res.status(200).json(httpStatus200(null, "File Renamed"))
     } catch (error) {
         if(error) res.status(500).json(httpStatus500(error))
     }
