@@ -1,7 +1,6 @@
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 const {Folders} = require('../../models/db')
 
-// * CREATE CHILD FOLDER 
 exports.createChildFolder = async (req, res) => {
     try {
         const childFolder = await new Folders({

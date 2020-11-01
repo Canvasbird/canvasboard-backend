@@ -1,7 +1,6 @@
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 const {Users, Folders} = require('../../models/db')
 
-// * CREATE FOLDER
 exports.createFolder = async (req, res) => {
     try {
 

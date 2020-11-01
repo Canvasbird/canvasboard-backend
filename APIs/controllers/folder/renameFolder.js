@@ -1,7 +1,6 @@
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 const { Folders} = require('../../models/db')
 
-// * RENAME FOLDER_NAME, FOLDER_TITLE & TAG
 exports.renameFolderAttributes = async (req, res)  =>{
     try {
         await Folders.findByIdAndUpdate(req.body.folder_id, {

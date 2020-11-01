@@ -1,7 +1,6 @@
 const {Folders} = require('../../models/db')
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 
-// * ADDING TIMESTAMP FOR LAST_ACCESSED & LAST_MODIFIED
 exports.lastAccessedModified = async (req, res) => {
     if(!req.body.is_modified) {
         try {

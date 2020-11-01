@@ -1,7 +1,6 @@
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 const {Users, Folders} = require('../../models/db')
 
-// * REMOVE FOLDER 
 exports.removeFolder = async (req, res) =>{
     try {
         await Folders.findByIdAndDelete(req.body.folder_id)

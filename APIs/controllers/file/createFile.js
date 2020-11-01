@@ -1,7 +1,6 @@
 const {  Folders, Files } = require("../../models/db");
-var minio = require('../../config/minio');
-
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus")
+const minio = require('../../config/minio')
 
 exports.createFile = async (req, res) => {
     try {

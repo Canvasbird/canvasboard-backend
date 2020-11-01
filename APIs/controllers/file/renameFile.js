@@ -1,7 +1,6 @@
 const { Files } = require("../../models/db");
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus")
 
-// * RENAME FILE_NAME, & TAG *MAIN FUNCTION
 exports.renameFileAttributes = async (req, res) =>{
     try {
         await Files.findByIdAndUpdate(req.body.file_id, {

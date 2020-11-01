@@ -1,7 +1,6 @@
 const { Files, Folders } = require("../../models/db");
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus")
 
-// * REMOVE FILES *MAIN FUNCTION
 exports.removeFile = async (req, res)=>{
     try {
         await Files.findByIdAndDelete(req.body.file_id)

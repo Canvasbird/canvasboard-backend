@@ -1,7 +1,6 @@
 const {Folders} = require('../../models/db')
 const { httpStatus200, httpStatus500} = require('../../status/httpStatus')
 
-//* REMOVE CHILD FOLDER
 exports.removeChildFolder = async (req, res) =>{
     try {
         await Folders.findByIdAndDelete(req.body.nested_folder_id)
