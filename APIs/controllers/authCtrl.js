@@ -8,6 +8,7 @@ const moment = require("moment")
 var db = require("../models/db");
 var config = require("../config/config");
 const { Users } = require("../models/db");
+const { connect } = require("http2");
 
 
 let transporter = nodemailer.createTransport({
@@ -68,12 +69,12 @@ function login(req, res) {
 
                         var token = jwt.sign(auth_data, config.app.jwtKey);
 
-                        Users.findById(user._id).populate('folders', (err, folders)=>{
+                        Users.findById(user._id).populate('folders').exec((err, folders)=>{
                             return res.status(200).json({
                                 success: true,
                                 token: token,
                                 folders:folders
-                            });
+                            })
                         })
 
                     } else {
