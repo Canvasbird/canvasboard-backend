@@ -16,9 +16,10 @@ exports.createFile = async (req, res) => {
         try {
 
             const rootFolder = await Folders.findById(req.body.folder_id)
-            const createdFile = await rootFolder.addChildFile(_id)
+            const message = await rootFolder.addChildFile(_id)
+            const savedFile = Files.findByIdAndUpdate(_id, {$set:{file_url:file_url}})
             await minio.minioClient.putObject('files', file_url, req.file.buffer) 
-            res.status(200).json(httpStatus200(createdFile, "File Created"))
+            res.status(200).json(httpStatus200(savedFile, message))
 
             } catch (error) {
                 if(error) res.status(500).json(httpStatus500(error))

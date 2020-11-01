@@ -14,9 +14,8 @@ exports.createFolder = async (req, res) => {
 
             const { _id } = await folder.save()  
             const user = await Users.findById(req.body.user_id)
-            console.log(user)
-            const createFolder = await user.addFolder(_id);
-            res.status(200).json(httpStatus200(createFolder, "Folder Created"))
+            const message = await user.addFolder(_id);
+            res.status(200).json(httpStatus200(folder, message))
 
         } catch (error) {
             console.log(error)

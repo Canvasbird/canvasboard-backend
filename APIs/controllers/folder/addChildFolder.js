@@ -11,8 +11,8 @@ exports.createChildFolder = async (req, res) => {
         try {
             const {_id} = await childFolder.save()
             const rootFolder = await Folders.findById(req.body.folder_id)
-            await rootFolder.addChildFolder(_id);
-            res.status(200).json(httpStatus200(rootFolder, "Folder Created"))
+            const message = await rootFolder.addChildFolder(_id);
+            res.status(200).json(httpStatus200(childFolder, message))
         } catch (error) {
             if(error) res.status(500).json(httpStatus500(error))
         }
