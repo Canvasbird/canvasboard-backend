@@ -7,10 +7,10 @@ function httpStatus500(error){
 }
 
 // * HTTP STATUS 200
-function httpStatus200(message, content){
+function httpStatus200(content, message){
     return {
-        message:message,
         content:content,
+        message:message,
         success:true
     }
 }
