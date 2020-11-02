@@ -8,7 +8,7 @@ var db = {
 
 	staging: {
 		DATABASE_HOST_URL: "mongodb://localhost:27017/canvasboard",
-		DATABASE_PORT: parseInt(process.env.DATABASE_PORT)
+		DATABASE_PORT: parseInt(process.env.DATABASE_PORT),
 	},
 
 	dev: {
@@ -18,7 +18,6 @@ var db = {
 };
 
 var minio_config = {
-
 	dev: {
 		access_key: "minio",
 		secret_key: "miniostorage",
@@ -37,7 +36,6 @@ var minio_config = {
 };
 
 var config = {
-
 	dialect: "mongo",
 
 	node_env: process.env.NODE_ENV || "dev",
