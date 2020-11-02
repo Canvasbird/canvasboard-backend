@@ -69,7 +69,7 @@ function login(req, res) {
 
                         var token = jwt.sign(auth_data, config.app.jwtKey);
 
-                        Users.findById(user._id).populate('folders').exec((err, folders)=>{
+                        Users.findById(user._id).populate('folders').exec((err, {folders} )=>{
                             return res.status(200).json({
                                 success: true,
                                 token: token,
