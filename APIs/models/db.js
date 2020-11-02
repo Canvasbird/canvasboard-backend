@@ -41,6 +41,8 @@ db.Users = require('./collections/user');
 db.Boards = require('./collections/boards');
 db.SharedFiles = require('./collections/sharedFiles');
 db.PasswordReset = require('./collections/passwordReset');
+db.Folders = require('./collections/folder')
+db.Files = require('./collections/file')
 
 db.mongoose = mongoose;
 

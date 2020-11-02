@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "fb255901-0bc5-41d2-8793-862d5b951e9d",
+		"name": "File",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create File",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token_here>",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"folder_id\":\"<folder_id>\",\r\n    \"file_name\":\"<file_name>\",\r\n    \"file_tag\":\"<file_tag>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/folder/create-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"folder",
+						"create-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rename FIle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token_here>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"file_id\":\"<file_id>\",\r\n    \"file_name\":\"<file_name>\",\r\n    \"file_tag\":\"<file_tag>\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/folder/rename-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"folder",
+						"rename-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove File",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token_here>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"file_id\":\"<file_id>\",\r\n    \"folder_id\":\"<folder_id>\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/folder/remove-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"folder",
+						"remove-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Files",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token_here>",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/folder/files/folder_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"folder",
+						"files",
+						"folder_id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Last Accessed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "<token_here>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"file_id\":\"<file_id>\",\r\n    \"is_modified\":true,\r\n    \"file_url\":\"<file_url>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/folder/last-accessed-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"folder",
+						"last-accessed-file"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
