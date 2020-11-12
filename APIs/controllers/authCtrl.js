@@ -423,18 +423,9 @@ function verify(req, res) {
 }
 
 module.exports = {
-<<<<<<< HEAD
-    login,
-    register,
-    verify,
-    forget,
-    reset
-}
-=======
   login,
   register,
   verify,
   forget,
   reset,
 };
->>>>>>> 2ec28f57f571b7a26bf9a82fc26f6a3c39c41d5c
