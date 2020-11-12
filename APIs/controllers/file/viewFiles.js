@@ -3,7 +3,6 @@ const { httpStatus200, httpStatus500 } = require("../../status/httpStatus");
 
 exports.viewFiles = async (req, res) => {
   try {
-    console.log(req.body);
     const files = await Folders.findById(req.params.folder_id)
       .populate("files")
       .exec();
