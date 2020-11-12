@@ -23,6 +23,7 @@ router.post(
 );
 
 router.get("/user/folder/files/:folder_id", isAuthenticated, viewFiles);
+
 router.delete("/user/folder/remove-file", isAuthenticated, removeFile);
 
 module.exports = router;

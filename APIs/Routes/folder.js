@@ -18,15 +18,12 @@ const { viewChildFolders } = require("../controllers/folder/viewChildFolders");
 
 router.post("/user/create-folder", isAuthenticated, createFolder);
 router.post("/user/rename-folder", isAuthenticated, renameFolderAttributes);
-router.delete("/user/remove-folder", isAuthenticated, removeFolder);
-router.get("/user/view-folders", isAuthenticated, viewUserFolders);
 
+router.delete("/user/remove-folder", isAuthenticated, removeFolder);
+
+router.get("/user/view-folders", isAuthenticated, viewUserFolders);
 router.post("/user/create-nested-folder", createChildFolder);
 router.delete("/user/remove-nested-folder", isAuthenticated, removeChildFolder);
-router.get(
-  "/user/view-nested-folders/:folder_id",
-  isAuthenticated,
-  viewChildFolders
-);
+router.get("/user/view-nested-folders/", isAuthenticated, viewChildFolders);
 
 module.exports = router;

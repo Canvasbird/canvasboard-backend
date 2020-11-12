@@ -1,64 +1,69 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-
+const userSchema = new mongoose.Schema(
+  {
     user_name: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
 
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
 
     salt: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
 
     email_id: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
 
     verified: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
 
     institute_name: {
-        type: String,
-        default: null
+      type: String,
+      default: null,
     },
 
-    folders:[{
+    folders: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Folder",
-    }]
-
-},
-    { autoCreate: true }
+        ref: "Folder",
+      },
+    ],
+  },
+  { autoCreate: true }
 );
 
-userSchema.methods.addFolder = function(folder_id){
-    this.folders.push(folder_id)
-    this.save();
-    return "Folder Saved!"
-}
+userSchema.methods.addFolder = function (folder_id) {
+  this.folders.push(folder_id);
+  this.save();
+  return "Folder Saved!";
+};
 
-userSchema.methods.removeFolderReference = function(folder_id){
-    var folders = this.folders;
-    const index = folders.find((folder, index)=>{
-        if (folder===folder_id) return index
-    })
+userSchema.methods.removeFolderReference = function (folder_id) {
+  var folders = this.folders;
+  const index = folders.find((folder, index) => {
+    if (String(folder) === String(folder_id)) return index;
+  });
+  if (index !== undefined) {
     folders.splice(index, 1);
     this.folders = folders;
     this.save();
-    return "Removed Folder!"
-}
+    return "Removed Folder!";
+  } else {
+    return "Folder does not exists!";
+  }
+};
 const Users = mongoose.model("users", userSchema);
 
 module.exports = Users;
