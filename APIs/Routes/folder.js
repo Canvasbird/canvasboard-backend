@@ -20,6 +20,10 @@ router.post("/user/create-folder", isAuthenticated, createFolder);
 router.post("/user/rename-folder", isAuthenticated, renameFolderAttributes);
 
 router.delete("/user/remove-folder", isAuthenticated, removeFolder);
+<<<<<<< HEAD
+=======
+router.get("/user/view-folders", isAuthenticated, viewUserFolders);
+>>>>>>> f01c19f16df7518d668f46e5460dd5a538c59bd7
 
 router.get("/user/view-folders", isAuthenticated, viewUserFolders);
 router.post("/user/create-nested-folder", createChildFolder);
