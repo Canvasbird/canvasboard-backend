@@ -50,11 +50,17 @@ userSchema.methods.addFolder = function (folder_id) {
   return "Folder Saved!";
 };
 
+function returnIndex(folders, folder_id) {
+  for (let i = 0; i < folders.length; i++) {
+    if (String(folders[i]) === String(folder_id)) {
+      return i;
+    }
+  }
+}
+
 userSchema.methods.removeFolderReference = function (folder_id) {
   var folders = this.folders;
-  const index = folders.find((folder, index) => {
-    if (String(folder) === String(folder_id)) return index;
-  });
+  const index = returnIndex(folders, folder_id);
   if (index !== undefined) {
     folders.splice(index, 1);
     this.folders = folders;

@@ -75,13 +75,16 @@ folderSchema.methods.addChildFolder = function (folder_id) {
 folderSchema.methods.removeChildFolderReference = function (folder_id) {
   var folders = this.folders;
   const index = folders.find((folder, index) => {
-    console.log(folder);
-    if (folder === folder_id) return index;
+    if (String(folder) === String(folder_id)) return index;
   });
-  folders.splice(index, 1);
-  this.folders = folders;
-  this.save();
-  return "Folder Removed!";
+  if (index !== undefined) {
+    folders.splice(index, 1);
+    this.folders = folders;
+    this.save();
+    return "Folder Removed!";
+  } else {
+    return "Folder does not exists!";
+  }
 };
 
 module.exports = mongoose.model("Folder", folderSchema);
