@@ -1,7 +1,7 @@
 const { Folders, Files } = require("../../models/db");
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus");
 
-// create file 
+// create file controller
 exports.createFile = async (req, res) => {
   try {
     const file = await new Files({
