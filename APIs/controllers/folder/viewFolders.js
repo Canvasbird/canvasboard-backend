@@ -1,6 +1,7 @@
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus");
 const { Users } = require("../../models/db");
 const jwt = require("jsonwebtoken");
+
 exports.viewUserFolders = async (req, res) => {
   try {
     var userId = jwt.verify(
