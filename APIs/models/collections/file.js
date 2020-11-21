@@ -6,9 +6,9 @@ const fileSchema = new Schema({
         type:String,
         required:true
     },
-    file_tag:{
-        type:String
-    },
+    file_tag:[
+        { type:String}
+    ],
     created_on:{
         type:Date,
         default:Date.now()
@@ -19,8 +19,8 @@ const fileSchema = new Schema({
     last_modified_on:{
         type:Date
     },
-    file_url:{
-        type:String
+    data:{
+        type:Object
     }
 })
 
