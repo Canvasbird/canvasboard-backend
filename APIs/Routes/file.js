@@ -7,7 +7,7 @@ const { renameFileAttributes } = require("../controllers/file/renameFile");
 const { removeFile } = require("../controllers/file/removeFile");
 const { viewFiles } = require("../controllers/file/viewFiles");
 
-// * File Routes
+// * --------------------------- File Routes ------------------------------------ //
 
 router.post("/user/folder/create-file", isAuthenticated, createFile);
 router.post("/user/folder/rename-file", isAuthenticated, renameFileAttributes);
