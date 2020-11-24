@@ -11,7 +11,7 @@ const { createChildFolder } = require("../controllers/folder/addChildFolder");
 const { removeChildFolder } = require("../controllers/folder/removeChildFolder");
 const { viewChildFolders } = require("../controllers/folder/viewChildFolders");
 
-// * Folder Routes
+// * --------------------------- Folder Routes ------------------------------------ //
 
 router.post("/user/create-folder", isAuthenticated, createFolder);
 router.post("/user/rename-folder", isAuthenticated, renameFolderAttributes);
