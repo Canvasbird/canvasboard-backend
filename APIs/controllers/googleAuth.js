@@ -1,19 +1,35 @@
-var config = require("../config/config");
 const { Users } = require("../models/db");
 const { httpStatus200, httpStatus500 } = require("../status/httpStatus");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
-var salt = crypto.randomBytes(16).toString("hex");
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
+const config = require('../config/config')
+
+
 
 exports.googleAuth = async (req, res) => {
-  try {
-    const user = await Users.findOne({ email: req.body.email }).exec();
-    if (user == null) {
-      const newUser = await new Users({
-        user_name: req.body.user_name,
-        email_id: req.body.email,
-        password: salt,
+
+  const ticket = await client.verifyIdToken({
+      idToken: req.body.token,
+      audience: process.env.CLIENT_ID  
+  });
+
+  const payload = ticket.getPayload();
+
+  var salt = crypto.randomBytes(16).toString("hex");
+  var password = crypto
+    .pbkdf2Sync("", salt, 1000, 512, "sha512")
+    .toString("hex");
+
+  try { 
+    const user = await Users.findOne({ email_id: payload.email }).exec();
+     if (user == null) { 
+         const newUser = await new Users({
+        user_name: payload.given_name,
+        email_id: payload.email,
+        password: password,
         salt: salt,
         verified: true,
         institute_name: "",
@@ -45,7 +61,7 @@ exports.googleAuth = async (req, res) => {
         created_at: new Date(),
       };
 
-      var newToken = jwt.sign(auth_data, config.app.JwtKey);
+      var newToken = jwt.sign(auth_data, config.app.jwtKey);
       return res.status(200).json(httpStatus200(newToken, ""));
     }
   } catch (error) {
