@@ -3,17 +3,16 @@ const { httpStatus200, httpStatus500 } = require("../status/httpStatus");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
+const config = require('../config/config')
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
-const config = require('../config/config')
-
 
 
 exports.googleAuth = async (req, res) => {
 
   const ticket = await client.verifyIdToken({
       idToken: req.body.token,
-      audience: process.env.CLIENT_ID  
+      audience: process.env.GOOGLE_CLIENTID  
   });
 
   const payload = ticket.getPayload();
