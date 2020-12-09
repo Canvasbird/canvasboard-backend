@@ -24,7 +24,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "config": "node config/config.js",
     "create-buckets": "node config/minio.js"
   },

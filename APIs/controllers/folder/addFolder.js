@@ -13,6 +13,8 @@ exports.createFolder = async (req, res) => {
       folder_name: req.body.folder_name,
       folder_title: req.body.folder_title,
       folder_tag: req.body.folder_tag,
+      folder_color: req.body.folder_color,
+      is_pinned:req.body.is_pinned,
       is_nested_folder: req.body.is_nested_folder,
     });
 
