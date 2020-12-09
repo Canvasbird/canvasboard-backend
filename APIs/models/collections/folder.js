@@ -25,6 +25,12 @@ const folderSchema = new Schema({
   is_nested_folder: {
     type: Boolean,
   },
+  folder_color:{
+    type:String
+  },
+  is_pinned:{
+    type:Boolean
+  },
   folders: [
     {
       type: mongoose.Schema.Types.ObjectId,

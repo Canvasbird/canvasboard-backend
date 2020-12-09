@@ -8,6 +8,8 @@ exports.renameFolderAttributes = async (req, res) => {
         $set: {
           folder_name: req.body.folder_name,
           folder_title: req.body.folder_title,
+          folder_color: req.body.folder_color,
+          is_pinned:req.body.is_pinned,
           folder_tag: req.body.folder_tag,
           last_accessed_on: Date.now(),
           last_modified_on: Date.now(),
