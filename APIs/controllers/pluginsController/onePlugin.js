@@ -3,7 +3,7 @@ const { httpStatus200, httpStatus500 } = require("../../status/httpStatus");
 
 exports.onePlugin = async (req, res) => {
   try {
-    const plugin = Plugins.findOne({name: req.params.plugin});
+    const plugin = await Plugins.findOne({name: req.params.plugin});
     if(plugin)
       return res.status(200).json(httpStatus200(plugin, "Plugin"));
     else
