@@ -6,6 +6,6 @@ exports.allPlugin = async (req, res) => {
     const plugins = await Plugins.find();
     return res.status(200).json(httpStatus200(plugins, "Plugins"));
   } catch (error) {
-    if (error) res.status(500).json(httpStatus500(error));
+    if (error) res.status(500).json(httpStatus500(error, "message"));
   }
 };

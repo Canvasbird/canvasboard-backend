@@ -6,10 +6,11 @@ exports.createPlugin = async (req, res) => {
     const plugin = await new Plugins({
       name: req.body.name,
       tagline: req.body.tagline,
+      details: req.body.details
     });
     await plugin.save();
-    return res.status(200).json(httpStatus200(null));
+    return res.status(200).json(httpStatus200(true, "success"));
   } catch (error) {
-    if (error) res.status(500).json(httpStatus500(error));
+    if (error) res.status(500).json(httpStatus500(error, "message"));
   }
 };

@@ -9,6 +9,6 @@ exports.onePlugin = async (req, res) => {
     else
       return res.status(404).json({message: "Not Found"})
   } catch (error) {
-    if (error) res.status(500).json(httpStatus500(error));
+    if (error) res.status(500).json(httpStatus500(error, "message"));
   }
 };
