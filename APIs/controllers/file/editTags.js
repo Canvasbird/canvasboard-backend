@@ -1,18 +1,18 @@
 const { Files } = require("../../models/db");
 const { httpStatus200, httpStatus500 } = require("../../status/httpStatus");
 
-exports.renameFileAttributes = async (req, res) => {
+exports.editFileTags = async (req, res) => {
   if (req.body.is_modified) {
     try {
       const changedContent = await Files.findByIdAndUpdate(req.body.file_id, {
         $set: {
-          file_name: req.body.file_name,
           last_accessed_on: Date.now(),
           last_modified_on: Date.now(),
+          file_tag: req.body.file_tag
         },
       });
       if (changedContent !== null) 
-        res.status(200).json(httpStatus200(null, "File Renamed"));
+        res.status(200).json(httpStatus200(null, "File Updated"));
        else 
         res.status(500).json(httpStatus500("Invalid File Id"));
     } catch (error) {
@@ -22,8 +22,8 @@ exports.renameFileAttributes = async (req, res) => {
     try {
       const changedContent = await Files.findByIdAndUpdate(req.body.file_id, {
         $set: {
-          file_name: req.body.file_name,
           last_accessed_on: Date.now(),
+          file_tag: req.body.file_tag
         },
       });
       if (changedContent !== null) 
