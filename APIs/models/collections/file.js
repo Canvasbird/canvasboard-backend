@@ -19,9 +19,9 @@ const fileSchema = new Schema({
     last_modified_on:{
         type:Date
     },
-    data:{
-        type:Object
-    }
+    data:[
+        {type:Object}
+    ]
 })
 
 
