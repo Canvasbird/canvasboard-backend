@@ -8,12 +8,13 @@ exports.editFileData = async (req, res) => {
         $set: {
           last_accessed_on: Date.now(),
           last_modified_on: Date.now(),
-          data:req.body.data
+          data: req.body.data,
+          file_name: req.body.file_name
         },
       });
-      if (changedContent !== null) 
+      if (changedContent !== null)
         res.status(200).json(httpStatus200(null, "File Updated"));
-       else 
+      else
         res.status(500).json(httpStatus500("Invalid File Id"));
     } catch (error) {
       if (error) res.status(500).json(httpStatus500(error));
@@ -23,12 +24,13 @@ exports.editFileData = async (req, res) => {
       const changedContent = await Files.findByIdAndUpdate(req.body.file_id, {
         $set: {
           last_accessed_on: Date.now(),
-          data:req.body.data
+          data: req.body.data,
+          file_name: req.body.file_name
         },
       });
-      if (changedContent !== null) 
+      if (changedContent !== null)
         res.status(200).json(httpStatus200(null, "File Renamed"));
-      else 
+      else
         res.status(500).json(httpStatus500("Invalid File Id"));
     } catch (error) {
       if (error) res.status(500).json(httpStatus500(error));
