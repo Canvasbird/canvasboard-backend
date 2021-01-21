@@ -344,7 +344,7 @@ function forget(req, res) {
         <br/>
         Go to the Link below to Reset Your Password! Link valid for 30 minutes.
         <br/><br/>
-        Please reset password <a href="#">HERE</a>
+        Please reset password <a href="https://canvasboard.live/verify">HERE</a>
         <br/>
         Enter confirmation code <code>${data.reset_token}</code>
         <br/><br/>
@@ -413,13 +413,13 @@ function verify(req, res) {
 				message: `${doc.user_name} verified successfully.`,
 			});
 		});
-	} catch (error) {}
+	} catch (error) { }
 }
 
 module.exports = {
-  login,
-  register,
-  verify,
-  forget,
-  reset,
+	login,
+	register,
+	verify,
+	forget,
+	reset,
 };
