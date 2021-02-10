@@ -415,6 +415,67 @@ function verify(req, res) {
 		});
 	} catch (error) { }
 }
+function deleteUser(req, res) {
+	try {
+
+		db.Users.findOne({
+			_id: db.mongoose.Types.ObjectId(req.token.user_id)
+		}, (err, user) => {
+
+			if (err) {
+				console.error(err);
+				res.status(500).json({
+					success: false,
+					message: err.message
+				});
+			}
+
+			if (user) {
+				db.Folders.remove({ _id: { $in: user.folders } }, (err, deletedObj) => {
+					if (err) {
+						console.error(err);
+						res.status(500).json({
+							success: false,
+							message: err.message
+						});
+					}
+					else {
+						db.Users.remove({ _id: db.mongoose.Types.ObjectId(req.token.user_id) }, (err, user) => {
+							if (err) {
+								res.status(500).json({
+									success: false,
+									message: err.message
+								});
+							}
+							else {
+
+								res.status(500).json({
+									success: true,
+									message: "user deleted"
+								});
+							}
+						})
+					}
+
+				});
+			}
+			else {
+				return res.status(500).json({
+					success: false,
+					message: "User not found"
+				});
+			}
+
+		});
+
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			success: false,
+			message: err.message
+		});
+	}
+}
 
 module.exports = {
 	login,
@@ -422,4 +483,5 @@ module.exports = {
 	verify,
 	forget,
 	reset,
+	deleteUser
 };
