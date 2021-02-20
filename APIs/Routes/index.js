@@ -7,7 +7,7 @@ var authCtrl = require("../controllers/authCtrl");
 var boardCtrl = require("../controllers/boardCtrl");
 var uploadCtrl = require("../controllers/uploadCtrl");
 var shareCtrl = require("../controllers/shareCtrl");
-var googleCtrl = require("../controllers/googleAuth");
+// var googleCtrl = require("../controllers/googleAuth");
 
 // Middlewares
 var auth = require("../middlewares/auth");
@@ -20,7 +20,7 @@ router.delete("/delete", auth.isAuthenticated, authCtrl.deleteUser);
 router.post("/forget", authCtrl.forget);
 router.post("/reset", authCtrl.reset);
 router.get("/verify", authCtrl.verify);
-router.post("/google-auth", googleCtrl.googleAuth);
+// router.post("/google-auth", googleCtrl.googleAuth);
 
 //--------------------------------------- Board APIs -----------------------------------------//
 
