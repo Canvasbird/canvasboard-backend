@@ -320,7 +320,7 @@ function reset(req, res) {
 		}
 	});
 }
-function forget(req, res) {
+async function forget(req, res) {
 	try {
 		if (!req.body.email_id) {
 			res.status(500).json({
@@ -357,6 +357,19 @@ function forget(req, res) {
 							});
 						}
 						if (data) {
+							const accessToken = await oAuth2Client.getAccessToken();
+
+							const transporter = nodemailer.createTransport({
+								service: 'gmail',
+								auth: {
+									type: 'OAuth2',
+									user: `${process.env.SENDER_EMAIL}`,
+									clientId: CLIENT_ID,
+									clientSecret: CLEINT_SECRET,
+									refreshToken: REFRESH_TOKEN,
+									accessToken: accessToken,
+								},
+							});
 							const html = `Hi there,
         <br/>
         Go to the Link below to Reset Your Password! Link valid for 30 minutes.
