@@ -348,7 +348,7 @@ async function forget(req, res) {
 						user_id: user._id,
 					};
 					pass_obj = new db.PasswordReset(pass_reset);
-					pass_obj.save((err, data) => {
+					pass_obj.save(async (err, data) => {
 						if (err) {
 							console.error(err);
 							return res.status(500).json({
