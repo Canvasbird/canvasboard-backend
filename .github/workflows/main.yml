@@ -26,6 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}       
     - run: npm ci
-      working-directory: ./API
+      working-directory: ./APIs
     - run: npm run build
     - run: npm test
