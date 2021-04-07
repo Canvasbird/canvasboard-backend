@@ -41,7 +41,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./APIs
-        file: ./Dockerfile
+        file: ./APIs/Dockerfile
         push: true
         tags: goliakshay357/canvasboard-backend:latest
       
