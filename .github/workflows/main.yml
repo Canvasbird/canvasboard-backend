@@ -31,10 +31,6 @@ jobs:
 #       working-directory: ./APIs
 #     - run: npm test
 
-  docker:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
     - name: Login to Docker
       uses: docker/login-action@v1
       with:
