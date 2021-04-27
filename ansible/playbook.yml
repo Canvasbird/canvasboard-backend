@@ -4,8 +4,4 @@
 
   tasks:
     - name: navigate to canvasboard-backend
-      shell: cd canvasboard-backend
-    - name: git pull the latest
-      shell: git pull
-    - name: docker build
-      shell: sudo docker-compose up --build -d
+      shell: ./entry.sh
