@@ -4,4 +4,4 @@
 
   tasks:
     - name: running inside the slave server
-      shell: echo ls >> /demo/demo.txt
+      shell: echo ls 
