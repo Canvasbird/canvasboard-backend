@@ -1,8 +1,8 @@
 #!/bin/sh
 echo "Ansible Entrypoint"
 
-echo "ansible_ssh_pass=goli" >> /hosts
-echo "ansible_become_pass=goli" >> /hosts
+echo "ansible_ssh_pass=$SSH_PASSWORD" >> /hosts
+echo "ansible_become_pass=$SSH_PASSWORD" >> /hosts
 
 echo "Entering the ansible using ansible-playbook"
 
