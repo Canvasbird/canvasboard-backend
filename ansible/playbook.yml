@@ -4,4 +4,4 @@
 
   tasks:
     - name: navigate to canvasboard-backend
-      shell: sudo ./entry.sh
+      shell: "./entry.sh"
