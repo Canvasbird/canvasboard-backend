@@ -3,6 +3,6 @@
 
 [all:vars]
 ansible_connection=ssh
-ansible_user=ubuntu
-ansible_ssh_user=ubuntu 
+ansible_user=$SSH_USER
+ansible_ssh_user=$SSH_USER 
 ansible_python_interpreter=/usr/bin/python3.8

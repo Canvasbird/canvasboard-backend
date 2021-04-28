@@ -55,4 +55,5 @@ jobs:
     - uses: ./.github/actions/ansible
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        SSH_USER: ${{ secrets.SSH_USER }}
 
