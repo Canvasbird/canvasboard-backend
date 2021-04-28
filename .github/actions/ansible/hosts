@@ -1,8 +1,8 @@
 [aws]
-13.233.38.38
+65.0.130.195
 
 [all:vars]
 ansible_connection=ssh
-ansible_user=$SSH_PASSWORD
-ansible_ssh_user=$SSH_PASSWORD
-ansible_python_interpreter=/usr/bin/python3.6
+ansible_user=$SSH_USER
+ansible_ssh_user=$SSH_USER 
+ansible_python_interpreter=/usr/bin/python3.8
