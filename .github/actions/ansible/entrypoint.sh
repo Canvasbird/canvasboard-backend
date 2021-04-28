@@ -6,8 +6,8 @@ echo "65.0.130.195" >> /hosts
 
 echo "[all:vars]" >> /hosts
 echo "ansible_connection=ssh" >> /hosts
-echo "ansible_user= ubuntu" >> /hosts
-echo "ansible_ssh_user= ubuntu" >> /hosts
+echo "ansible_user= $SSH_USER" >> /hosts
+echo "ansible_ssh_user= $SSH_USER" >> /hosts
 echo "ansible_python_interpreter=/usr/bin/python3.8" >> /hosts
 
 echo "ansible_ssh_pass=$SSH_PASSWORD" >> /hosts
