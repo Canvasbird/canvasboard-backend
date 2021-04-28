@@ -182,13 +182,37 @@ async function register(req, res) {
 								accessToken: accessToken,
 							},
 						});
-						const html = `Hi there,
-      <br/>
-      Thank you for registering!
-      <br/><br/>
-      Please verify your email <a href="https://api.canvasboard.live/api/v1/verify?id=${data._id}">HERE</a>
-      <br/><br/>
-      Have a pleasant day.`;
+
+						const html =`
+
+						Hi there,
+						<div style="background-color: #ffede1"> 
+							<div style = "font-size:24px; font-family:sans-serif, Lucida Sans" >    
+							
+								Hi there,   
+								<br/>   
+							
+								Thank you! for registering with us.
+							</div>
+							<br/><br/>
+				
+							<div style = "font-size: 24px; font-weight: bold; font-family:'Courier New', Courier, monospace ;"> 
+						
+								Please verify your email <a href="https://api.canvasboard.live/api/v1/verify?id=${data._id}">HERE</a>
+								<br/><br/>    
+							</div>
+				
+							<div  style = "font-size: 24px; font-family:'Courier New', Courier, monospace;">
+								Have a pleasant day!
+							</div>
+				
+							<br>
+							<div style = "display: flex; margin: auto; width: 15%;">
+								<img src = "http://cdn.lowgif.com/medium/9b4aa7c976d165f9-.gif" width = "300" height = "300">
+							</div>
+						</div>
+
+						`
 						transporter.sendMail(
 							{
 								from: `Canvasboard 👨🏻‍🏫 <${process.env.SENDER_EMAIL}>`, // sender address
@@ -370,15 +394,51 @@ async function forget(req, res) {
 									accessToken: accessToken,
 								},
 							});
-							const html = `Hi there,
-        <br/>
-        Go to the Link below to Reset Your Password! Link valid for 30 minutes.
-        <br/><br/>
-        Please reset password <a href="https://canvasboard.live/verify">HERE</a>
-        <br/>
-        Enter confirmation code <code>${data.reset_token}</code>
-        <br/><br/>
-        If your did not requested password reset kindly ignore this message.`;
+							const html = `
+					
+							<div style="background-color: #bee7e8 "> 
+								<div style = "font-size:24px; font-family:sans-serif, Lucida Sans" >    
+								
+									Hi there,   
+									<br>
+									There was a attempt reset your password for this account
+									<br/>   
+									
+									<br><br>
+				
+									Go to the Link below to Reset Your Password! 
+									
+									<br>
+									Link is valid for <b>30 minutes</b>
+									
+									<br>
+									<img src = "https://www.digitalartsonline.co.uk/cmsdata/slideshow/3640076/d4765032380855_572164951fd3b.gif" width = "300" height = "300">
+									<br>
+				
+								</div>
+								<br/><br/>
+					
+								<div style = "font-size: 24px; font-weight: bold; font-family:'Courier New', Courier, monospace ;"> 
+							
+									Please reset password <a href="https://canvasboard.live/verify">HERE</a>
+									<br/><br/>    
+								</div>
+					
+								<div  style = "font-size: 24px; font-family:'Courier New', Courier, monospace;">
+									<br>
+									Enter confirmation code <code>${data.reset_token}</code>
+									<br><br>
+								</div>
+				
+								<div style = "font-size: 24px;font-family:'Courier New', Courier, monospace ;">
+				
+									<br><br>
+									<em> If you did not requested password reset kindly ignore this message.</em>
+								</div>
+				
+							</div>
+							`
+
 							transporter.sendMail(
 								{
 									from: `Canvasboard 👨🏻‍🏫 <${process.env.SENDER_EMAIL}>`, // sender address
