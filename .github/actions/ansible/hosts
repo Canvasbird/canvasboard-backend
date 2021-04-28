@@ -1,0 +1,8 @@
+[aws]
+65.0.130.195
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_user=ubuntu 
+ansible_python_interpreter=/usr/bin/python3.8
