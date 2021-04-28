@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+
+
+  tasks:
+    - name: navigate to canvasboard-backend
+      shell: "./entry.sh"

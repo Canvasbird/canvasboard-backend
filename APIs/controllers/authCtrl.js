@@ -2,19 +2,25 @@ var jwt = require("jsonwebtoken");
 var crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const moment = require("moment");
+const { google } = require('googleapis');
+
 
 // File Imports
 
 var db = require("../models/db");
 var config = require("../config/config");
 
-let transporter = nodemailer.createTransport({
-	service: "gmail",
-	auth: {
-		user: process.env.GMAIL_EMAIL, // generated ethereal user
-		pass: process.env.GMAIL_PASSWORD, // generated ethereal password
-	},
-});
+
+const CLIENT_ID = process.env.GOOGLE_CLIENTID;
+const CLEINT_SECRET = process.env.GOOGLE_CLIENTSECTRET;
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const oAuth2Client = new google.auth.OAuth2(
+	CLIENT_ID,
+	CLEINT_SECRET,
+	REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 function login(req, res) {
 	try {
@@ -95,7 +101,6 @@ function login(req, res) {
 		});
 	}
 }
-
 async function register(req, res) {
 	try {
 		if (!req.body.email_id) {
@@ -155,7 +160,7 @@ async function register(req, res) {
 
 				var user_obj = new db.Users(new_user);
 
-				user_obj.save((err, data) => {
+				user_obj.save(async (err, data) => {
 					if (err) {
 						console.error(err);
 						return res.status(500).json({
@@ -164,6 +169,19 @@ async function register(req, res) {
 						});
 					}
 					if (data) {
+						const accessToken = await oAuth2Client.getAccessToken();
+
+						const transporter = nodemailer.createTransport({
+							service: 'gmail',
+							auth: {
+								type: 'OAuth2',
+								user: `${process.env.SENDER_EMAIL}`,
+								clientId: CLIENT_ID,
+								clientSecret: CLEINT_SECRET,
+								refreshToken: REFRESH_TOKEN,
+								accessToken: accessToken,
+							},
+						});
 						const html = `Hi there,
       <br/>
       Thank you for registering!
@@ -302,8 +320,7 @@ function reset(req, res) {
 		}
 	});
 }
-
-function forget(req, res) {
+async function forget(req, res) {
 	try {
 		if (!req.body.email_id) {
 			res.status(500).json({
@@ -331,7 +348,7 @@ function forget(req, res) {
 						user_id: user._id,
 					};
 					pass_obj = new db.PasswordReset(pass_reset);
-					pass_obj.save((err, data) => {
+					pass_obj.save(async (err, data) => {
 						if (err) {
 							console.error(err);
 							return res.status(500).json({
@@ -340,6 +357,19 @@ function forget(req, res) {
 							});
 						}
 						if (data) {
+							const accessToken = await oAuth2Client.getAccessToken();
+
+							const transporter = nodemailer.createTransport({
+								service: 'gmail',
+								auth: {
+									type: 'OAuth2',
+									user: `${process.env.SENDER_EMAIL}`,
+									clientId: CLIENT_ID,
+									clientSecret: CLEINT_SECRET,
+									refreshToken: REFRESH_TOKEN,
+									accessToken: accessToken,
+								},
+							});
 							const html = `Hi there,
         <br/>
         Go to the Link below to Reset Your Password! Link valid for 30 minutes.
