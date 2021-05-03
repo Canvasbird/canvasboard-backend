@@ -2,9 +2,7 @@ const {removeFile} = require('../../../controllers/file/removeFile');
 
 test("should respond with a 500 status code for an empty request body", async () => {
     const res = {
-        json: function(d) {
-            console.log("\n : " + d);
-        },
+        json: function(d) {},
         status: function(s) {this.statusCode = s; return this;}
     }
     await removeFile({}, res);

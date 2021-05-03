@@ -2,7 +2,6 @@ const {viewFile} = require('../../../controllers/file/viewFile');
 const { Files } = require("../../../models/db");
 const res = {
     json: function(d) {
-        console.log("\n : " + d);
     },
     status: function(s) {this.statusCode = s; return this;}
 };
