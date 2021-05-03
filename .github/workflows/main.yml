@@ -2,7 +2,9 @@ name: Canvasboard Backend CI/CD
 
 on:
   push:
-    branches: [ master ]    
+     branches:
+      - master
+      - unitTesting
   pull_request:
     branches: [ master ]
 
