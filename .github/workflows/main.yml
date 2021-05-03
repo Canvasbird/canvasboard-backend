@@ -26,7 +26,8 @@ jobs:
       working-directory: ./APIs
 #     - run: npm run build
 #       working-directory: ./APIs
-#     - run: npm test
+    - run: npm test
+      working-directory: ./APIs/test
 # ----------------DOCKER SETUP AND PUSH ---------------------------
     - name: Login to Docker
       uses: docker/login-action@v1
