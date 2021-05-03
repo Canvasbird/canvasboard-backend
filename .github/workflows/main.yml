@@ -2,7 +2,9 @@ name: Canvasboard Backend CI/CD
 
 on:
   push:
-    branches: [ master ]    
+     branches:
+      - master
+      - unitTesting
   pull_request:
     branches: [ master ]
 
@@ -24,7 +26,8 @@ jobs:
       working-directory: ./APIs
 #     - run: npm run build
 #       working-directory: ./APIs
-#     - run: npm test
+    - run: npm test
+      working-directory: ./APIs/test
 # ----------------DOCKER SETUP AND PUSH ---------------------------
     - name: Login to Docker
       uses: docker/login-action@v1
@@ -44,16 +47,16 @@ jobs:
     - name: Image Digest
       run: echo ${{ steps.docker_build.outputs.digest }}
 
-# -----------------DEPLOYMENT IN ANSIBLE ---------------------------
-  deploy:
+# # -----------------DEPLOYMENT IN ANSIBLE ---------------------------
+#   deploy:
 
-    needs: build
-    runs-on: ubuntu-latest
+#     needs: build
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./.github/actions/ansible
-      env:
-        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-        SSH_USER: ${{ secrets.SSH_USER }}
+#     steps:
+#     - uses: actions/checkout@v2
+#     - uses: ./.github/actions/ansible
+#       env:
+#         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+#         SSH_USER: ${{ secrets.SSH_USER }}
 
