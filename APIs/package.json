@@ -33,9 +33,6 @@
     "create-buckets": "node config/minio.js",
     "test": "jest --runInBand --detectOpenHandles"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "author": "",
   "license": "ISC"
 }
