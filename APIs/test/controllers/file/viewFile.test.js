@@ -5,11 +5,15 @@ const res = {
     },
     status: function(s) {this.statusCode = s; return this;}
 };
+beforeAll(done => {
+    done()
+});
+
 test("should respond with a 500 status code for an empty request body", async () => {
 
     await viewFile({}, res);
     expect(res.statusCode).toBe(500)
-})
+});
 
 test("should respond with a 500 status code for an empty file_id body", async () => {
 
@@ -20,7 +24,7 @@ test("should respond with a 500 status code for an empty file_id body", async ()
     }
     await viewFile(req, res);
     expect(res.statusCode).toBe(500)
-})
+});
 
 test("should respond with a 500 status code for a non-empty file_id body", async () => {
     let req = {
@@ -30,7 +34,7 @@ test("should respond with a 500 status code for a non-empty file_id body", async
     }
     await viewFile(req, res);
     expect(res.statusCode).toBe(500)
-})
+});
 
 describe("func", () => {
     it("viewFile", async () => {
@@ -54,4 +58,6 @@ describe("func", () => {
     });
 });
 
-
+afterAll(done => {
+    done()
+});
