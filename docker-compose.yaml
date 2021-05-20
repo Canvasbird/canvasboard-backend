@@ -43,6 +43,8 @@ services:
       - MINIO_SECRET_KEY=miniostorage
     ports:
       - "9000:9000"
+    depends_on:
+      - mongodb
     volumes:
       - object-storage-data:/data
     networks:
