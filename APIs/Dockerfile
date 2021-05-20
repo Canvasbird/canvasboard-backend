@@ -1,6 +1,6 @@
 FROM node:12.16-alpine
 
-RUN apt-get update && apt-get install htop
+RUN apt-get update
 
 WORKDIR /app
 
