@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN apt-get update
+RUN apt-get update && apt-get install htop
 
 WORKDIR /app
 
