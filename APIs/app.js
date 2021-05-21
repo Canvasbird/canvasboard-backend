@@ -2,6 +2,8 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var morgan = require('morgan')
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
 
 var config = require('./config/config');
 
@@ -10,6 +12,25 @@ const folderRoutes = require('./Routes/folder');
 const fileRoutes = require('./Routes/file')
 
 var app = express();
+// ------------------ Sentry ----------------------
+Sentry.init({
+  dsn: "https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8",
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Tracing.Integrations.Express({
+          app,
+      }),
+  ],
+  tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+// -------------------------------------------------
 app.use(morgan('dev'))
 
 app.use(bodyParser.json());
