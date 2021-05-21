@@ -1,9 +1,11 @@
-FROM node:12.16-alpine
+FROM node:latest
+
+RUN apt-get update && apt-get install htop
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm install --no-progress
 
 CMD ["npm","start"]

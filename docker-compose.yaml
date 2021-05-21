@@ -13,6 +13,8 @@ services:
       PORT: 4000
     ports:
       - "4000:4000"
+    depends_on:
+      - mongodb
     networks:
       - docker_net
     restart: unless-stopped
@@ -41,6 +43,8 @@ services:
       - MINIO_SECRET_KEY=miniostorage
     ports:
       - "9000:9000"
+    depends_on:
+      - mongodb
     volumes:
       - object-storage-data:/data
     networks:
