@@ -26,6 +26,7 @@ jobs:
       working-directory: ./APIs
 #     - run: npm run build
 #       working-directory: ./APIs
+    - run: npm install
     - run: npm test
       working-directory: ./APIs/test
 # ----------------DOCKER SETUP AND PUSH ---------------------------
