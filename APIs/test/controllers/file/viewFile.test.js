@@ -4,39 +4,19 @@ const res = {
     json: function(d) {},
     status: function(s) {this.statusCode = s; return this;}
 };
-beforeAll(done => {
-    done()
-});
 
-test("should respond with a 500 status code for an empty request body", async () => {
+describe("viewFile", () => {
+    beforeAll(done => {
+        done()
+    });
 
-    await viewFile({}, res);
-    expect(res.statusCode).toBe(500)
-});
+    it("should respond with a 500 status code for an empty request body", async () => {
 
-test("should respond with a 500 status code for an empty file_id body", async () => {
+        await viewFile({}, res);
+        expect(res.statusCode).toBe(500)
+    });
 
-    let req = {
-        params: {
-            "file_id":""
-        }
-    }
-    await viewFile(req, res);
-    expect(res.statusCode).toBe(500)
-});
-
-test("should respond with a 500 status code for a non-empty file_id body", async () => {
-    let req = {
-        params: {
-            "file_id":"1"
-        }
-    }
-    await viewFile(req, res);
-    expect(res.statusCode).toBe(500)
-});
-
-describe("func", () => {
-    it("viewFile", async () => {
+    it("should return a 200 response code for proper request", async () => {
         const mock = jest.spyOn(Files, 'findById');  // spy on Message.findOne()
         mock.mockImplementation(() => Promise.resolve({
             file_name: 'random',
@@ -55,6 +35,28 @@ describe("func", () => {
         expect(res.statusCode).toBe(200);
         mock.mockRestore();  // restore Message.findOne()
     });
+
+    it("should respond with a 500 status code for an empty file_id body", async () => {
+
+        let req = {
+            params: {
+                "file_id":""
+            }
+        }
+        await viewFile(req, res);
+        expect(res.statusCode).toBe(500)
+    });
+
+    it("should respond with a 500 status for a file_id but no mock", async () => {
+        let req = {
+            params: {
+                "file_id":"1"
+            }
+        }
+        await viewFile(req, res);
+        expect(res.statusCode).toBe(500)
+    });
+
 });
 
 afterAll(done => {
