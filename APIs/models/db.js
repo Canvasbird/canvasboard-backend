@@ -43,6 +43,7 @@ db.SharedFiles = require('./collections/sharedFiles');
 db.PasswordReset = require('./collections/passwordReset');
 db.Folders = require('./collections/folder')
 db.Files = require('./collections/file')
+db.Plugins = require('./collections/plugins');
 
 db.mongoose = mongoose;
 

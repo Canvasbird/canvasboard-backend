@@ -10,6 +10,7 @@ var config = require('./config/config');
 var router = require('./Routes/index');
 const folderRoutes = require('./Routes/folder');
 const fileRoutes = require('./Routes/file')
+const pluginRoutes = require('./Routes/plugins');
 
 var app = express();
 // ------------------ Sentry ----------------------
@@ -50,6 +51,7 @@ app.get("/", function (req, res) {
 app.use('/api/v1', router);
 app.use('/api/v1', folderRoutes)
 app.use('/api/v1', fileRoutes)
+app.use('/api/v1', pluginRoutes);
 
 app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));
 
