@@ -21,5 +21,4 @@ COPY --from=build /app /app
 #Changing user to non root
 USER 1000
 
-
 CMD ["npm","start"]
