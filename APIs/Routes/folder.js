@@ -10,6 +10,7 @@ const { viewUserFolders } = require("../controllers/folder/viewFolders");
 const { createChildFolder } = require("../controllers/folder/addChildFolder");
 const { removeChildFolder } = require("../controllers/folder/removeChildFolder");
 const { viewChildFolders } = require("../controllers/folder/viewChildFolders");
+const { getAllFolderFile } = require("../controllers/folder/getAllFolderFiles");
 
 // * --------------------------- Folder Routes ------------------------------------ //
 
@@ -20,6 +21,6 @@ router.get("/user/view-folders", isAuthenticated, viewUserFolders);
 router.post("/user/create-nested-folder", createChildFolder);
 router.delete("/user/remove-nested-folder", isAuthenticated, removeChildFolder);
 router.get("/user/view-nested-folders/", isAuthenticated, viewChildFolders);
+router.get("/user/get-all-folders-files/", isAuthenticated, getAllFolderFile);
 
 module.exports = router;
-
