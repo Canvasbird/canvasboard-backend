@@ -8,7 +8,7 @@ const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
 
 Sentry.init({
-    dsn: "https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8",
+    dsn: 'https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8',
     
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
