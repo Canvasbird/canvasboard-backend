@@ -1,16 +1,16 @@
-var express = require("express");
-var cors = require('cors');
-var morgan = require('morgan')
+const express = require("express");
+const cors = require('cors');
+const morgan = require('morgan')
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 
-var config = require('./config/config');
+const config = require('./config/config');
 
-var router = require('./Routes/index');
+const router = require('./Routes/index');
 const folderRoutes = require('./Routes/folder');
 const fileRoutes = require('./Routes/file')
 
-var app = express();
+const app = express();
 // ------------------ Sentry ----------------------
 Sentry.init({
   dsn: "https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8",
