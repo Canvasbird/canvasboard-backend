@@ -1,19 +1,12 @@
 const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const helmet = require('helmet');
-const Sentry = require('@sentry/node');
-const Tracing = require('@sentry/tracing');
-
 const config = require('./config/config');
-
-const router = require('./Routes/index');
-const folderRoutes = require('./Routes/folder');
-const fileRoutes = require('./Routes/file');
 
 const app = express();
 
 // ------------------ Sentry ----------------------
+const Sentry = require('@sentry/node');
+const Tracing = require('@sentry/tracing');
+
 Sentry.init({
     dsn: "https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8",
     
@@ -33,11 +26,16 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 // -------------------------------------------------
 
-app.use(morgan('dev'));
-app.use(helmet());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
+const helmet = require('helmet');
+app.use(helmet());
+
+const cors = require('cors');
 app.use(cors());
 
 app.listen(config.app.port, (err) => {
@@ -54,6 +52,11 @@ app.get('/', (req, res) => {
     });
 });
 
+const router = require('./Routes/index');
 app.use('/api/v1', router);
+
+const folderRoutes = require('./Routes/folder');
 app.use('/api/v1', folderRoutes);
+
+const fileRoutes = require('./Routes/file');
 app.use('/api/v1', fileRoutes);
