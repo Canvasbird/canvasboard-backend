@@ -12,7 +12,7 @@ var config = require("../config/config");
 
 
 const CLIENT_ID = process.env.GOOGLE_CLIENTID;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENTSECTRET;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENTSECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const oAuth2Client = new google.auth.OAuth2(
