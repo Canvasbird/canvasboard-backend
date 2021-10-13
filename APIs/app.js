@@ -50,5 +50,9 @@ app.use('/api/v1', router);
 app.use('/api/v1', folderRoutes)
 app.use('/api/v1', fileRoutes)
 
-app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));
-
+app.listen(config.app.port, (err) => {
+    if (err) {
+        return console.error(`\nError starting server! ❌\n${err}`);
+    }
+    console.log(`\nServer successfully started on PORT: ${config.app.port} ✔️`);
+});
