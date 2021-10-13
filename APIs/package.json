@@ -6,7 +6,6 @@
   "dependencies": {
     "@sentry/node": "^6.4.1",
     "@sentry/tracing": "^6.4.1",
-    "body-parser": "^1.19.0",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -25,7 +24,6 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node app.js",
     "config": "node config/config.js",

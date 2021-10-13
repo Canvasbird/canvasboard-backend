@@ -1,5 +1,4 @@
 var express = require("express");
-var bodyParser = require('body-parser');
 var cors = require('cors');
 var morgan = require('morgan')
 const Sentry = require("@sentry/node");
@@ -33,8 +32,8 @@ app.use(Sentry.Handlers.tracingHandler());
 // -------------------------------------------------
 app.use(morgan('dev'))
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 
