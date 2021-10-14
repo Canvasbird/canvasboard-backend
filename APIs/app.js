@@ -3,6 +3,10 @@ const config = require('./config/config');
 
 const app = express();
 
+const morgan = require('morgan');
+const helmet = require('helmet');
+const cors = require('cors');
+
 // ------------------ Sentry ----------------------
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
@@ -29,13 +33,8 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const morgan = require('morgan');
 app.use(morgan('dev'));
-
-const helmet = require('helmet');
 app.use(helmet());
-
-const cors = require('cors');
 app.use(cors());
 
 app.listen(config.app.port, (err) => {
