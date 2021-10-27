@@ -1,55 +1,61 @@
-var express = require("express");
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var morgan = require('morgan')
-const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
+const express = require('express');
+const config = require('./config/config');
 
-var config = require('./config/config');
+const app = express();
 
-var router = require('./Routes/index');
-const folderRoutes = require('./Routes/folder');
-const fileRoutes = require('./Routes/file')
+const morgan = require('morgan');
+const helmet = require('helmet');
+const cors = require('cors');
 
-var app = express();
 // ------------------ Sentry ----------------------
-Sentry.init({
-  dsn: "https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8",
+const Sentry = require('@sentry/node');
+const Tracing = require('@sentry/tracing');
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  integrations: [
-      new Sentry.Integrations.Http({ tracing: true }),
-      new Tracing.Integrations.Express({
-          app,
-      }),
-  ],
-  tracesSampleRate: 1.0,
+Sentry.init({
+    dsn: 'https://7905f16e0ef747ee970d420eefa65296@sentry.canvasboard.live/8',
+    
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    integrations: [
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Tracing.Integrations.Express({
+            app,
+        }),
+    ],
+    tracesSampleRate: 1.0,
 });
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 // -------------------------------------------------
-app.use(morgan('dev'))
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(morgan('dev'));
+app.use(helmet());
 app.use(cors());
 
-
-
-app.get("/", function (req, res) {
-  res.status(200).json({
-    success: true,
-    message: "Welcome to the Canvasboard APIs"
-  });
+app.listen(config.app.port, (err) => {
+    if (err) {
+        return console.error(`\nError starting server! ❌\n${err}`);
+    }
+    console.log(`\nServer successfully started on PORT: ${config.app.port} ✔️`);
 });
 
+app.get('/', (req, res) => {
+    return res.status(200).send({
+        success: true,
+        message: 'Welcome to the Canvasboard APIs'
+    });
+});
 
+const router = require('./Routes/index');
 app.use('/api/v1', router);
-app.use('/api/v1', folderRoutes)
-app.use('/api/v1', fileRoutes)
 
-app.listen(config.app.port, () => console.log(`\nAPIs are Running on PORT: ${config.app.port} 😎\n`));
+const folderRoutes = require('./Routes/folder');
+app.use('/api/v1', folderRoutes);
 
+const fileRoutes = require('./Routes/file');
+app.use('/api/v1', fileRoutes);

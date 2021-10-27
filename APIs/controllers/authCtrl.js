@@ -12,12 +12,12 @@ var config = require("../config/config");
 
 
 const CLIENT_ID = process.env.GOOGLE_CLIENTID;
-const CLEINT_SECRET = process.env.GOOGLE_CLIENTSECTRET;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENTSECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
-	CLEINT_SECRET,
+	CLIENT_SECRET,
 	REDIRECT_URI
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
@@ -177,7 +177,7 @@ async function register(req, res) {
 								type: 'OAuth2',
 								user: `${process.env.SENDER_EMAIL}`,
 								clientId: CLIENT_ID,
-								clientSecret: CLEINT_SECRET,
+								clientSecret: CLIENT_SECRET,
 								refreshToken: REFRESH_TOKEN,
 								accessToken: accessToken,
 							},
@@ -365,7 +365,7 @@ async function forget(req, res) {
 									type: 'OAuth2',
 									user: `${process.env.SENDER_EMAIL}`,
 									clientId: CLIENT_ID,
-									clientSecret: CLEINT_SECRET,
+									clientSecret: CLIENT_SECRET,
 									refreshToken: REFRESH_TOKEN,
 									accessToken: accessToken,
 								},
