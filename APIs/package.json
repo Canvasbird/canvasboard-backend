@@ -30,7 +30,8 @@
   "scripts": {
     "start": "node app.js",
     "config": "node config/config.js",
-    "create-buckets": "node config/minio.js"
+    "create-buckets": "node config/minio.js",
+    "test": "npx mocha tests/test.js"
   },
   "author": "",
   "license": "ISC"
