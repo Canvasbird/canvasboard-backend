@@ -17,7 +17,7 @@
 ```
 > Clone the repo
 > $ cd canvasboard-backend/apis
-> $ npm install
+> $ npm ci
 > rename .env_template to .env
 > fill in the credentials in .env files
 ```
@@ -32,9 +32,11 @@
 ```
 <img src="https://user-images.githubusercontent.com/20599925/138544885-5fa7ec30-e1ca-4ec6-98c9-6d72a406259a.png" width="600"/>
 
-**Running the Unit Tests**
+**Running the Unit Tests 
+🔧**
 ```
 > $ cd canvasboard-backend/apis
+> $ npm ci
 > $ npm test
 ```
 <img src = "https://media.discordapp.net/attachments/845744017056858172/976570039614451832/Screenshot_from_2022-05-19_01-08-41.png" width="600"/>
